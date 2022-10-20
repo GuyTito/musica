@@ -7,7 +7,7 @@
 
 @layer base{
   body{
-    @apply bg-dark font-serif
+    @apply bg-dark font-serif text-white
   }
   svg.active{
     @apply fill-secondary
