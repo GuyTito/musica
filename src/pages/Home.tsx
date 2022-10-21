@@ -110,7 +110,7 @@ export default function Home() {
           </div>
 
           {/* music controls */}
-          <div className="flex flex-col gap-8 items-center">
+          <div className="flex flex-col gap-6 items-center">
             <div className="flex gap-10">
               <TfiControlShuffle className="w-6 h-6 hover:text-white" />
               <BsSkipStartFill className="w-6 h-6 hover:text-white" />
