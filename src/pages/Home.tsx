@@ -9,6 +9,7 @@ import search from "../assets/icons/search.png";
 import hug from "../assets/hug.png";
 import heart from "../assets/icons/heart.svg";
 import golden from "../assets/golden-age.png";
+import bubble from "../assets/bubble.png";
 import HoleheartSVG from "../assets/icons/HoleheartSVG";
 
 
@@ -77,6 +78,17 @@ export default function Home() {
                     </button>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          {/* new releases */}
+          <div className="mt-10">
+            <h2 className="mb-3 font-bold text-2xl">New releases</h2>
+            <div>
+              <div>
+                <img src={bubble} className="rounded-3xl" alt="" />
+                <span className="text-xs">Life in a bubble</span>
               </div>
             </div>
           </div>
