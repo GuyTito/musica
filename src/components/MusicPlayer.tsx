@@ -17,10 +17,13 @@ export default function MusicPlayer() {
   function loadSong(songIndex: number){
     setSongSrc(songs[songIndex].music)
   }
+
+  function playpause() {
+    !isPlaying ? playSong() : pauseSong()
+  }
   
   function playSong() {
     setIsPlaying(true)
-    
     audio.current!.volume = 0.1;
     setTimeout(function () {
       audio.current?.play();
@@ -69,10 +72,10 @@ export default function MusicPlayer() {
           <div className="flex gap-10">
             <TfiControlShuffle title="Shuffle" className="w-6 h-6 hover:text-white" />
             <BsSkipStartFill onClick={() => prevSong()} title="Previous" className="w-6 h-6 hover:text-white" />
-            <button className="rounded-full bg-secondary p-2 shadow-[0px_0px_18px_rgba(255,255,255,0.3)] hover:shadow-[0px_0px_18px_white]">
+            <button onClick={()=>playpause()} className="rounded-full bg-secondary p-2 shadow-[0px_0px_18px_rgba(255,255,255,0.3)] hover:shadow-[0px_0px_18px_white]">
               { isPlaying 
-                ? <FaPause onClick={() => pauseSong()} className="w-3 h-3 text-white" /> 
-                : <FaPlay onClick={() => playSong()} className="w-3 h-3 text-white" />
+                ? <FaPause  className="w-3 h-3 text-white" /> 
+                : <FaPlay className="w-3 h-3 text-white" />
               }
             </button>
             <BsSkipEndFill onClick={() => nextSong()} title="Next" className="w-6 h-6 hover:text-white" />
