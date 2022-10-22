@@ -1,10 +1,10 @@
 import MusicPlayer from "../components/MusicPlayer";
 import Searchbar from "../components/Searchbar";
 import Sidebar from "../components/Sidebar";
-import { LayoutProps } from "../types";
+import { Outlet } from "react-router-dom";
 
 
-export default function Layout({children}: LayoutProps) {
+export default function Layout() {
   
   
   return (
@@ -15,7 +15,7 @@ export default function Layout({children}: LayoutProps) {
         <div className="ml-6 w-full mb-32 mr-[60px]">
           <Searchbar />
 
-          {children}
+          <Outlet />
           
         </div>
 
