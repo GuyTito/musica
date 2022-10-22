@@ -12,11 +12,17 @@ export default function MusicPlayer() {
   const [songIndex, setSongIndex] = useState<number>(0);
   const [songSrc, setSongSrc] = useState<string>("");
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [mute, setMute] = useState<boolean>(true)
+  const [volume, setVolume] = useState<number>(0.1)
   const audio = useRef<HTMLMediaElement>(null);
 
   function loadSong(songIndex: number){
     setSongSrc(songs[songIndex].music)
   }
+
+  useEffect(()=>{
+    loadSong(songIndex);    
+  }, [songIndex])
 
   function playpause() {
     !isPlaying ? playSong() : pauseSong()
@@ -24,7 +30,6 @@ export default function MusicPlayer() {
   
   function playSong() {
     setIsPlaying(true)
-    audio.current!.volume = 0.1;
     setTimeout(function () {
       audio.current?.play();
     }, 150);
@@ -49,9 +54,14 @@ export default function MusicPlayer() {
     playSong();
   }
 
+  function toggleVolume() {
+    setMute(!mute)
+  }
+
   useEffect(()=>{
-    loadSong(songIndex);    
-  }, [songIndex])
+    mute ? audio.current!.volume = volume : audio.current!.volume = 0
+  }, [mute])
+
 
   
   return (
@@ -72,7 +82,7 @@ export default function MusicPlayer() {
           <div className="flex gap-10">
             <TfiControlShuffle title="Shuffle" className="w-6 h-6 hover:text-white" />
             <BsSkipStartFill onClick={() => prevSong()} title="Previous" className="w-6 h-6 hover:text-white" />
-            <button onClick={()=>playpause()} className="rounded-full bg-secondary p-2 shadow-[0px_0px_18px_rgba(255,255,255,0.3)] hover:shadow-[0px_0px_18px_white]">
+            <button onClick={()=>playpause()} title={isPlaying ? 'Pause' : 'Play'} className="rounded-full bg-secondary p-2 shadow-[0px_0px_18px_rgba(255,255,255,0.3)] hover:shadow-[0px_0px_18px_white]">
               { isPlaying 
                 ? <FaPause  className="w-3 h-3 text-white" /> 
                 : <FaPlay className="w-3 h-3 text-white" />
@@ -93,7 +103,10 @@ export default function MusicPlayer() {
 
         {/* volume */}
         <div className="flex gap-2 items-center">
-          <FaVolumeUp className="text-white" />
+          {mute 
+            ? <FaVolumeUp onClick={()=>toggleVolume()} title="Mute" className="text-white" />
+            : <FaVolumeOff onClick={() => toggleVolume()} title="Unmute" className="text-white" />
+          }
           <div className="group py-3">
             <div className="w-[150px] h-[2px] rounded bg-white/10 flex items-center">
               <div className="bg-white group-hover:bg-secondary w-[10%] h-[2px] rounded-l"></div>
