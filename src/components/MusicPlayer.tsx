@@ -4,7 +4,7 @@ import { TfiControlShuffle } from "react-icons/tfi";
 import { FaPlay, FaPause, FaVolumeOff, FaVolumeUp } from "react-icons/fa";
 import { TbRepeatOnce, TbRepeat } from "react-icons/tb";
 import { BsSkipEndFill, BsSkipStartFill } from "react-icons/bs";
-import React, { useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { songs } from "../songs";
 
 
@@ -12,8 +12,9 @@ export default function MusicPlayer() {
   const [songIndex, setSongIndex] = useState<number>(0);
   const [songSrc, setSongSrc] = useState<string>("");
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [mute, setMute] = useState<boolean>(true)
+  const [sound, setSound] = useState<boolean>(true)
   const [volume, setVolume] = useState<number>(10)
+  const [tempVol, setTempVol] = useState<number>(10)
   const [progress, setProgress] = useState<number>(10)
   const audio = useRef<HTMLMediaElement>(null);
 
@@ -57,15 +58,27 @@ export default function MusicPlayer() {
   }
 
   function toggleVolume() {
-    setMute(!mute)
+    setSound(!sound)
   }
 
   useEffect(()=>{
-    mute 
-      ? audio.current!.volume = volume / 100
-      : audio.current!.volume = 0
-  }, [mute])
+    if (sound) {
+      setVolume(tempVol)
+      audio.current!.volume = tempVol / 100
+    } else {
+      setTempVol(volume)
+      setVolume(0)
+      audio.current!.volume = 0
+    }
+  }, [sound])
 
+  function handleVolume(e: FormEvent<HTMLInputElement>) {
+    const currentVolume = Number(e.currentTarget.value) 
+    setTempVol(currentVolume)    
+    setVolume(currentVolume)
+    setSound(true)
+    audio.current!.volume = currentVolume / 100
+  }
 
   
   return (
@@ -105,12 +118,12 @@ export default function MusicPlayer() {
 
         {/* volume */}
         <div className="flex gap-2 items-center">
-          {mute 
+          {sound 
             ? <FaVolumeUp onClick={()=>toggleVolume()} title="Mute" className="text-white" />
             : <FaVolumeOff onClick={() => toggleVolume()} title="Unmute" className="text-white" />
           }
           <div className="w-[150px] py-3">
-            <input style={{ backgroundSize: `${volume}% 100%` }} onChange={(e) => setVolume(Number(e.target.value))} className="fr__input" type="range" value={volume} min="0" max="100" step="1" />
+            <input style={{ backgroundSize: `${volume}% 100%` }} onChange={(e) => handleVolume(e)} className="fr__input" type="range" value={volume} min="0" max="100" step="1" />
           </div>
         </div>
       </div>
