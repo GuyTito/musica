@@ -5,65 +5,65 @@
 @tailwind utilities;
 
 
-@layer base{
-  body{
+@layer base {
+  body {
     @apply bg-dark font-serif text-white
   }
-  svg.active{
+
+  svg.active {
     @apply fill-secondary
   }
 }
 
 @layer components {
   .fr__input {
-      background-color: rgba(255, 255, 255, 0.5);
-      background-image: linear-gradient(white, white);
-      background-repeat: no-repeat;
-      border-radius: 0.25em;
-      display: block;
-      width: 100%;
-      /* max-width: 600px; */
-      height: 4px;
-      transition: background-color 1s;
-      -webkit-appearance: none;
-      appearance: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-  
-    .fr__input:hover {
-      background-image: linear-gradient(#FACD66, #FACD66);
-    }
-  
-  
-    /* WebKit */
-    .fr__input::-webkit-slider-thumb {
-      background-color: white;
-      border: 0;
-      border-radius: 50%;
-      width: 10px;
-      height: 10px;
-      -webkit-appearance: none;
-      appearance: none;
-      display: none;
-    }
-  
-    .fr__input:hover::-webkit-slider-thumb {
-      background-color: #FACD66;
-      display: block;
-    }
-  
-    /* Firefox */
-    .fr__input::-moz-range-thumb {
-      background-color: white;
-      border: 0;
-      border-radius: 50%;
-      width: 10px;
-      height: 10px;
-      display: none;
-    }
-  
-    .fr__input:hover::-moz-range-thumb {
-      background-color: #FACD66;
-      display: block;
-    }
+    background-color: rgba(255, 255, 255, 0.5);
+    background-image: linear-gradient(white, white);
+    background-repeat: no-repeat;
+    border-radius: 0.25em;
+    display: block;
+    width: 100%;
+    height: 4px;
+    transition: background-color 1s;
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .fr__input:hover {
+    background-image: linear-gradient(#FACD66, #FACD66);
+  }
+
+
+  /* WebKit */
+  .fr__input::-webkit-slider-thumb {
+    background-color: white;
+    border: 0;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+  }
+
+  .fr__input:hover::-webkit-slider-thumb {
+    background-color: #FACD66;
+    display: block;
+  }
+
+  /* Firefox */
+  .fr__input::-moz-range-thumb {
+    background-color: white;
+    border: 0;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    display: none;
+  }
+
+  .fr__input:hover::-moz-range-thumb {
+    background-color: #FACD66;
+    display: block;
+  }
 }
