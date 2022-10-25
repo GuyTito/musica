@@ -89,6 +89,10 @@ export default function MusicPlayer() {
     audio.current!.currentTime = (musicProgress / 100) * audio.current!.duration
   }
 
+  function hh_mm_ss(totalSeconds: number){
+    return new Date(totalSeconds * 1000).toISOString().substring(14, 19)
+  }
+
   
 
   
@@ -122,8 +126,14 @@ export default function MusicPlayer() {
           </div>
 
           {/* music progress */}
-          <div className="py-3 w-[600px]">
-            <input type="range" onChange={(e) => seek(Number(e.currentTarget.value))} style={{ backgroundSize: `${progress}% 100%`}} value={progress} min="0" max="100" step="1" className="fr__input" />
+          <div className="flex gap-2 items-center text-xs text-white">
+            <span>{audio.current?.currentTime && hh_mm_ss(audio.current!.currentTime)}</span>
+            <div className=" w-[300px]  lg:w-[500px]">
+              <input type="range" onChange={(e) => seek(Number(e.currentTarget.value))} style={{ backgroundSize: `${progress}% 100%`}} value={progress} min="0" max="100" step="1" className="fr__input" />
+            </div>
+            <span>
+              {audio.current?.duration ? hh_mm_ss(audio.current?.duration) : '00:00'}
+            </span>
           </div>
         </div>
 
