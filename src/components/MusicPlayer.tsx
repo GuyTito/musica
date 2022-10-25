@@ -4,7 +4,7 @@ import { TfiControlShuffle } from "react-icons/tfi";
 import { FaPlay, FaPause, FaVolumeOff, FaVolumeUp } from "react-icons/fa";
 import { TbRepeatOnce, TbRepeat } from "react-icons/tb";
 import { BsSkipEndFill, BsSkipStartFill } from "react-icons/bs";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { songs } from "../songs";
 
 
@@ -13,7 +13,8 @@ export default function MusicPlayer() {
   const [songSrc, setSongSrc] = useState<string>("");
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [mute, setMute] = useState<boolean>(true)
-  const [volume, setVolume] = useState<number>(0.1)
+  const [volume, setVolume] = useState<number>(10)
+  const [progress, setProgress] = useState<number>(10)
   const audio = useRef<HTMLMediaElement>(null);
 
   function loadSong(songIndex: number){
@@ -30,6 +31,7 @@ export default function MusicPlayer() {
   
   function playSong() {
     setIsPlaying(true)
+
     setTimeout(function () {
       audio.current?.play();
     }, 150);
@@ -59,7 +61,9 @@ export default function MusicPlayer() {
   }
 
   useEffect(()=>{
-    mute ? audio.current!.volume = volume : audio.current!.volume = 0
+    mute 
+      ? audio.current!.volume = volume / 100
+      : audio.current!.volume = 0
   }, [mute])
 
 
@@ -91,13 +95,11 @@ export default function MusicPlayer() {
             <BsSkipEndFill onClick={() => nextSong()} title="Next" className="w-6 h-6 hover:text-white" />
             <TbRepeatOnce title="Repeat Song" className="w-6 h-6 hover:text-white" />
           </div>
-          <div className="group py-3">
-            <div className=" w-[600px] h-[2px] rounded bg-white/10 flex items-center">
-              <div className="bg-white group-hover:bg-secondary w-[20%] h-[2px] rounded"></div>
-              <div className="hidden group-hover:block -ml-1 p-[2px] bg-transparent rounded-full border-white border">
-                <div className="bg-secondary h-2 w-2 rounded-full "></div>
-              </div>
-            </div>
+
+          {/* music progress */}
+          <div  className="py-3 w-[600px]">
+            <input style={{ backgroundSize: `${progress}% 100%` }} onChange={(e) => setProgress(Number(e.target.value))} className="fr__input" type="range" value={progress} min="0" max="100" step="1" />
+
           </div>
         </div>
 
@@ -107,13 +109,8 @@ export default function MusicPlayer() {
             ? <FaVolumeUp onClick={()=>toggleVolume()} title="Mute" className="text-white" />
             : <FaVolumeOff onClick={() => toggleVolume()} title="Unmute" className="text-white" />
           }
-          <div className="group py-3">
-            <div className="w-[150px] h-[2px] rounded bg-white/10 flex items-center">
-              <div className="bg-white group-hover:bg-secondary w-[10%] h-[2px] rounded-l"></div>
-              <div className="hidden group-hover:block -ml-2 p-[2px] bg-transparent rounded-full border-white border">
-                <div className="bg-secondary h-2 w-2 rounded-full "></div>
-              </div>
-            </div>
+          <div className="w-[150px] py-3">
+            <input style={{ backgroundSize: `${volume}% 100%` }} onChange={(e) => setVolume(Number(e.target.value))} className="fr__input" type="range" value={volume} min="0" max="100" step="1" />
           </div>
         </div>
       </div>
