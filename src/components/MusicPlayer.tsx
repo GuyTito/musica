@@ -4,7 +4,7 @@ import { TfiControlShuffle } from "react-icons/tfi";
 import { FaPlay, FaPause, FaVolumeOff, FaVolumeUp } from "react-icons/fa";
 import { TbRepeatOnce, TbRepeat } from "react-icons/tb";
 import { BsSkipEndFill, BsSkipStartFill } from "react-icons/bs";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
 import { songs } from "../songs";
 
 
@@ -15,7 +15,7 @@ export default function MusicPlayer() {
   const [sound, setSound] = useState<boolean>(true)
   const [volume, setVolume] = useState<number>(10)
   const [tempVol, setTempVol] = useState<number>(10)
-  const [progress, setProgress] = useState<number>(10)
+  const [progress, setProgress] = useState<number>(0)
   const audio = useRef<HTMLMediaElement>(null);
 
   function loadSong(songIndex: number){
@@ -80,11 +80,23 @@ export default function MusicPlayer() {
     audio.current!.volume = currentVolume / 100
   }
 
+  function seek(e: FormEvent<HTMLInputElement>) {
+    setProgress(Number(e.currentTarget.value))
+  }
+
+  function updateProgress(e: SyntheticEvent<HTMLAudioElement, Event>) {
+    const { duration, currentTime } = e.currentTarget;
+    if (isPlaying) setProgress((currentTime / duration) * 100);
+  }
+
+  
+
   
   return (
     <>
       <div className="fixed backdrop-blur bg-dark-alt/50 border-t border-white/10 w-full  bottom-0 flex justify-between items-center pl-[100px] pr-[60px] py-4 text-white/40">
-        <audio src={songSrc} ref={audio}></audio>
+        <audio ref={audio} src={songSrc} onTimeUpdate={(e) => updateProgress(e)}></audio>
+
         {/* cover image */}
         <div className="flex items-center gap-3">
           <img src={golden} className="w-12 h-12 rounded-[14px]" alt="" />
@@ -110,9 +122,8 @@ export default function MusicPlayer() {
           </div>
 
           {/* music progress */}
-          <div  className="py-3 w-[600px]">
-            <input style={{ backgroundSize: `${progress}% 100%` }} onChange={(e) => setProgress(Number(e.target.value))} className="fr__input" type="range" value={progress} min="0" max="100" step="1" />
-
+          <div className="py-3 w-[600px]">
+            <input type="range" onChange={(e) => seek(e)} style={{ backgroundSize: `${progress}% 100%`}} value={progress} min="0" max="100" step="1" className="fr__input" />
           </div>
         </div>
 
