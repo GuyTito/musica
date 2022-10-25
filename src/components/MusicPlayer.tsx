@@ -1,4 +1,3 @@
-
 import golden from "../assets/golden-age.png";
 import { TfiControlShuffle } from "react-icons/tfi";
 import { FaPlay, FaPause, FaVolumeOff, FaVolumeUp } from "react-icons/fa";
@@ -80,13 +79,14 @@ export default function MusicPlayer() {
     audio.current!.volume = currentVolume / 100
   }
 
-  function seek(e: FormEvent<HTMLInputElement>) {
-    setProgress(Number(e.currentTarget.value))
-  }
-
   function updateProgress(e: SyntheticEvent<HTMLAudioElement, Event>) {
     const { duration, currentTime } = e.currentTarget;
     if (isPlaying) setProgress((currentTime / duration) * 100);
+  }
+
+  function seek(musicProgress:number) {
+    setProgress(musicProgress)
+    audio.current!.currentTime = (musicProgress / 100) * audio.current!.duration
   }
 
   
@@ -123,7 +123,7 @@ export default function MusicPlayer() {
 
           {/* music progress */}
           <div className="py-3 w-[600px]">
-            <input type="range" onChange={(e) => seek(e)} style={{ backgroundSize: `${progress}% 100%`}} value={progress} min="0" max="100" step="1" className="fr__input" />
+            <input type="range" onChange={(e) => seek(Number(e.currentTarget.value))} style={{ backgroundSize: `${progress}% 100%`}} value={progress} min="0" max="100" step="1" className="fr__input" />
           </div>
         </div>
 
