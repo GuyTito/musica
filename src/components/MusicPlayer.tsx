@@ -10,6 +10,9 @@ import { songs } from "../songs";
 export default function MusicPlayer() {
   const [songIndex, setSongIndex] = useState<number>(0);
   const [songSrc, setSongSrc] = useState<string>("");
+  const [songTitle, setSongTitle] = useState<string>("");
+  const [artist, setArtist] = useState<string>("");
+  const [coverImg, setCoverImg] = useState<string>("");
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [unmute, setUnmute] = useState<boolean>(true)
   const [volume, setVolume] = useState<number>(10)
@@ -19,6 +22,9 @@ export default function MusicPlayer() {
 
   function loadSong(songIndex: number){
     setSongSrc(songs[songIndex].music)
+    setSongTitle(songs[songIndex].name)
+    setArtist(songs[songIndex].artist)
+    setCoverImg(songs[songIndex].img)
   }
 
   useEffect(()=>{
@@ -109,10 +115,10 @@ export default function MusicPlayer() {
 
         {/* cover image */}
         <div className="flex items-center gap-3">
-          <img src={golden} className="w-12 h-12 rounded-[14px]" alt="" />
+          <img src={coverImg || golden} className="w-12 h-12 rounded-[14px]" alt="" />
           <div className="flex flex-col">
-            <h3 className="font-bold text-white text-sm">Seasons in</h3>
-            <span className="font-bold text-[10px] text-xs">James</span>
+            <h3 className="font-bold text-white text-sm">{songTitle}</h3>
+            <span className="font-bold text-[10px] text-xs">{artist}</span>
           </div>
         </div>
 
