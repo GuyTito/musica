@@ -6,6 +6,7 @@ import { BsSkipEndFill, BsSkipStartFill } from "react-icons/bs";
 import { MouseEvent, FormEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
 import { songs } from "../songs";
 import { RepeatOptions } from "../types";
+import { getRandomNum } from "../hooks/useHooks";
 
 
 export default function MusicPlayer() {
@@ -20,7 +21,9 @@ export default function MusicPlayer() {
   const [tempVol, setTempVol] = useState<number>(10)
   const [progress, setProgress] = useState<number>(0)
   const [repeat, setRepeat] = useState<RepeatOptions>('DISABLED')
-  const [seekTime, setSeekTime] =useState('0')
+  const [seekTime, setSeekTime] = useState('0')
+  const [shuffled, setShuffled] = useState(false)
+  const [randomIndex, setRandomIndex] = useState(0)
   const audio = useRef<HTMLMediaElement>(null);
   const progressBar = useRef<HTMLInputElement>(null);
 
@@ -53,17 +56,29 @@ export default function MusicPlayer() {
   }
 
   function nextSong() {
-    if (songIndex === (songs.length - 1)) setSongIndex(0)
-    else setSongIndex(songIndex + 1)
-    loadSong(songIndex)
-    playSong();
+    if (shuffled) {
+      const randomNum = getRandomNum((songs.length - 1))
+      setRandomIndex(randomNum)
+      loadSong(randomIndex)
+      playSong();
+    } else {
+      if (songIndex === (songs.length - 1)) setSongIndex(0)
+      else setSongIndex(songIndex + 1)
+      loadSong(songIndex)
+      playSong();
+    }
   }
 
   function prevSong() {
-    if (songIndex === 0) setSongIndex(songs.length - 1)
-    else setSongIndex(songIndex - 1)
-    loadSong(songIndex);
-    playSong();
+    if (shuffled) {
+      loadSong(randomIndex)
+      playSong();
+    } else {
+      if (songIndex === 0) setSongIndex(songs.length - 1)
+      else setSongIndex(songIndex - 1)
+      loadSong(songIndex);
+      playSong();
+    }
   }
 
   function toggleVolume() {
@@ -149,7 +164,11 @@ export default function MusicPlayer() {
         <div className="flex flex-col gap-6 items-center">
           {/* music controls */}
           <div className="flex gap-10">
-            <TfiControlShuffle title="Shuffle" className="w-6 h-6 hover:text-white" />
+            <TfiControlShuffle 
+              onClick={() => setShuffled(!shuffled)} 
+              title={shuffled ? "Disable Shuffle" : 'Shuffle'} 
+              className={`w-6 h-6 ${shuffled && 'text-secondary'}`} 
+            />
             <BsSkipStartFill onClick={() => prevSong()} title="Previous" className="w-6 h-6 hover:text-white" />
             <button onClick={()=>playpause()} title={isPlaying ? 'Pause' : 'Play'} className="rounded-full bg-secondary p-2 shadow-[0px_0px_18px_rgba(255,255,255,0.3)] hover:shadow-[0px_0px_18px_white]">
               { isPlaying 
