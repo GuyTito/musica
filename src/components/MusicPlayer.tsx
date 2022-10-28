@@ -119,7 +119,7 @@ export default function MusicPlayer() {
 
         {/* cover image */}
         <div className="flex items-center gap-3">
-          <img src={coverImg || golden} className="w-12 h-12 rounded-[14px]" alt="" />
+          <img src={coverImg} className="w-12 h-12 rounded-[14px]" alt="song image" />
           <div className="flex flex-col">
             <h3 className="font-bold text-white text-sm">{songTitle}</h3>
             <span className="font-bold text-[10px] text-xs">{artist}</span>
