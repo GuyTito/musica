@@ -1,4 +1,3 @@
-import golden from "../assets/golden-age.png";
 import { TfiControlShuffle } from "react-icons/tfi";
 import { FaPlay, FaPause, FaVolumeOff, FaVolumeUp } from "react-icons/fa";
 import { TbRepeatOnce, TbRepeat } from "react-icons/tb";
@@ -6,7 +5,7 @@ import { BsSkipEndFill, BsSkipStartFill } from "react-icons/bs";
 import { MouseEvent, FormEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
 import { songs } from "../songs";
 import { RepeatOptions } from "../types";
-import { getRandomNum } from "../hooks/useHooks";
+import { getRandomNum, hh_mm_ss } from "../hooks/useHooks";
 
 
 export default function MusicPlayer() {
@@ -112,10 +111,6 @@ export default function MusicPlayer() {
   function seek(musicProgress:number) {
     setProgress(musicProgress)
     audio.current!.currentTime = (musicProgress / 100) * audio.current!.duration
-  }
-
-  function hh_mm_ss(totalSeconds: number){
-    return new Date(totalSeconds * 1000).toISOString().substring(14, 19)
   }
 
   function checkSrc() {
