@@ -22,7 +22,7 @@ export default function MusicPlayer() {
   }
 
   useEffect(()=>{
-    loadSong(songIndex);    
+    loadSong(songIndex);
   }, [songIndex])
 
   function playpause() {
@@ -93,13 +93,19 @@ export default function MusicPlayer() {
     return new Date(totalSeconds * 1000).toISOString().substring(14, 19)
   }
 
+  function checkSrc() {
+    if (audio.current!.currentSrc) {
+      nextSong()
+    }
+  }
+
   
 
   
   return (
     <>
       <div className="fixed backdrop-blur bg-dark-alt/50 border-t border-white/10 w-full  bottom-0 flex justify-between items-center pl-[100px] pr-[60px] py-4 text-white/40">
-        <audio ref={audio} src={songSrc} onTimeUpdate={(e) => updateProgress(e)}></audio>
+        <audio ref={audio} src={songSrc} onTimeUpdate={(e) => updateProgress(e)} onError={()=>checkSrc()}></audio>
 
         {/* cover image */}
         <div className="flex items-center gap-3">
