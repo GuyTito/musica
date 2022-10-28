@@ -3,7 +3,7 @@ import { TfiControlShuffle } from "react-icons/tfi";
 import { FaPlay, FaPause, FaVolumeOff, FaVolumeUp } from "react-icons/fa";
 import { TbRepeatOnce, TbRepeat } from "react-icons/tb";
 import { BsSkipEndFill, BsSkipStartFill } from "react-icons/bs";
-import { FormEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
+import { MouseEvent, FormEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
 import { songs } from "../songs";
 import { RepeatOptions } from "../types";
 
@@ -20,7 +20,9 @@ export default function MusicPlayer() {
   const [tempVol, setTempVol] = useState<number>(10)
   const [progress, setProgress] = useState<number>(0)
   const [repeat, setRepeat] = useState<RepeatOptions>('DISABLED')
+  const [seekTime, setSeekTime] =useState('0')
   const audio = useRef<HTMLMediaElement>(null);
+  const progressBar = useRef<HTMLInputElement>(null);
 
   function loadSong(songIndex: number){
     setSongSrc(songs[songIndex].music)
@@ -117,13 +119,23 @@ export default function MusicPlayer() {
     if (repeat === 'DISABLED') pauseSong()
   }
 
+  function showSeekTime(e: MouseEvent<HTMLInputElement, globalThis.MouseEvent>) {
+    const width = progressBar.current!.clientWidth
+    const clickX = e.nativeEvent.offsetX
+    const time = hh_mm_ss((clickX / width) * audio.current!.duration)
+    setSeekTime(time)
+  }
   
 
   
   return (
     <>
       <div className="fixed backdrop-blur bg-dark-alt/50 border-t border-white/10 w-full  bottom-0 flex justify-between items-center pl-[100px] pr-[60px] py-4 text-white/40">
-        <audio ref={audio} src={songSrc} onTimeUpdate={(e) => updateProgress(e)} onError={()=>checkSrc()} onEnded={()=>handleSongEnded()}></audio>
+        <audio ref={audio} src={songSrc} 
+          onTimeUpdate={(e) => updateProgress(e)} 
+          onError={()=>checkSrc()} 
+          onEnded={()=>handleSongEnded()}>
+        </audio>
 
         {/* cover image */}
         <div className="flex items-center gap-3">
@@ -163,7 +175,12 @@ export default function MusicPlayer() {
                 : '0:00'}
             </span>
             <div className=" w-[300px] lg:w-[500px]">
-              <input type="range" onChange={(e) => seek(Number(e.currentTarget.value))} style={{ backgroundSize: `${progress}% 100%`}} value={progress} min="0" max="100" step="1" className="fr__input" />
+              <input ref={progressBar} type="range" title={seekTime}
+                onChange={(e) => seek(Number(e.currentTarget.value))} 
+                onMouseMove={(e)=>showSeekTime(e)}
+                style={{ backgroundSize: `${progress}% 100%`}} value={progress} 
+                min="0" max="100" step="1" className="fr__input" 
+              />
             </div>
             <span>
               {audio.current?.duration 
@@ -180,7 +197,11 @@ export default function MusicPlayer() {
             : <FaVolumeOff onClick={() => toggleVolume()} title="Unmute" className="text-white" />
           }
           <div className="w-[150px] py-3">
-            <input style={{ backgroundSize: `${volume}% 100%` }} onChange={(e) => handleVolume(e)} className="fr__input" type="range" value={volume} min="0" max="100" step="1" />
+            <input type="range" 
+              style={{ backgroundSize: `${volume}% 100%` }} 
+              onChange={(e) => handleVolume(e)} 
+              value={volume} min="0" max="100" step="1" className="fr__input" 
+            />
           </div>
         </div>
       </div>
