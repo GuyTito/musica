@@ -5,6 +5,7 @@ import { TbRepeatOnce, TbRepeat } from "react-icons/tb";
 import { BsSkipEndFill, BsSkipStartFill } from "react-icons/bs";
 import { FormEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
 import { songs } from "../songs";
+import { RepeatOptions } from "../types";
 
 
 export default function MusicPlayer() {
@@ -18,6 +19,7 @@ export default function MusicPlayer() {
   const [volume, setVolume] = useState<number>(10)
   const [tempVol, setTempVol] = useState<number>(10)
   const [progress, setProgress] = useState<number>(0)
+  const [repeat, setRepeat] = useState<RepeatOptions>('DISABLED')
   const audio = useRef<HTMLMediaElement>(null);
 
   function loadSong(songIndex: number){
@@ -105,8 +107,14 @@ export default function MusicPlayer() {
     }
   }
 
+  function repeatSong(){
+    setRepeat('ONE')
+    audio.current!.loop = true
+  }
+
   function handleSongEnded() {
-    nextSong()
+    if (repeat === 'ENABLED') nextSong()
+    if (repeat === 'DISABLED') pauseSong()
   }
 
   
@@ -126,8 +134,8 @@ export default function MusicPlayer() {
           </div>
         </div>
 
-        {/* music controls */}
         <div className="flex flex-col gap-6 items-center">
+          {/* music controls */}
           <div className="flex gap-10">
             <TfiControlShuffle title="Shuffle" className="w-6 h-6 hover:text-white" />
             <BsSkipStartFill onClick={() => prevSong()} title="Previous" className="w-6 h-6 hover:text-white" />
@@ -138,7 +146,13 @@ export default function MusicPlayer() {
               }
             </button>
             <BsSkipEndFill onClick={() => nextSong()} title="Next" className="w-6 h-6 hover:text-white" />
-            <TbRepeatOnce title="Repeat Song" className="w-6 h-6 hover:text-white" />
+
+            {repeat === 'DISABLED' && 
+              <TbRepeat title="Enable repeat" className="w-6 h-6" onClick={() => setRepeat('ENABLED')} />}
+            {repeat === 'ENABLED' && 
+              <TbRepeat title="Repeat current song" className="w-6 h-6 text-secondary" onClick={() => repeatSong()} />}
+            {repeat === 'ONE' && 
+              <TbRepeatOnce title="Disable repeat" className="w-6 h-6 text-secondary" onClick={() => setRepeat('DISABLED')} />}
           </div>
 
           {/* music progress */}
