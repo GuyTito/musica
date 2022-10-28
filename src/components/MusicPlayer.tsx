@@ -105,13 +105,17 @@ export default function MusicPlayer() {
     }
   }
 
+  function handleSongEnded() {
+    nextSong()
+  }
+
   
 
   
   return (
     <>
       <div className="fixed backdrop-blur bg-dark-alt/50 border-t border-white/10 w-full  bottom-0 flex justify-between items-center pl-[100px] pr-[60px] py-4 text-white/40">
-        <audio ref={audio} src={songSrc} onTimeUpdate={(e) => updateProgress(e)} onError={()=>checkSrc()}></audio>
+        <audio ref={audio} src={songSrc} onTimeUpdate={(e) => updateProgress(e)} onError={()=>checkSrc()} onEnded={()=>handleSongEnded()}></audio>
 
         {/* cover image */}
         <div className="flex items-center gap-3">
