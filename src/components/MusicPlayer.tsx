@@ -156,13 +156,19 @@ export default function MusicPlayer() {
           </div>
 
           {/* music progress */}
-          <div className="flex gap-2 items-center text-xs text-white">
-            <span>{audio.current?.currentTime && hh_mm_ss(audio.current!.currentTime)}</span>
-            <div className=" w-[300px]  lg:w-[500px]">
+          <div className="flex gap-3 items-center text-xs text-white">
+            <span>
+              {audio.current?.currentTime 
+                ? hh_mm_ss(audio.current!.currentTime) 
+                : '0:00'}
+            </span>
+            <div className=" w-[300px] lg:w-[500px]">
               <input type="range" onChange={(e) => seek(Number(e.currentTarget.value))} style={{ backgroundSize: `${progress}% 100%`}} value={progress} min="0" max="100" step="1" className="fr__input" />
             </div>
             <span>
-              {audio.current?.duration ? hh_mm_ss(audio.current?.duration) : '00:00'}
+              {audio.current?.duration 
+                ? hh_mm_ss(audio.current?.duration) 
+                : '00:00'}
             </span>
           </div>
         </div>
