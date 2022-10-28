@@ -11,7 +11,7 @@ export default function MusicPlayer() {
   const [songIndex, setSongIndex] = useState<number>(0);
   const [songSrc, setSongSrc] = useState<string>("");
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [sound, setSound] = useState<boolean>(true)
+  const [unmute, setUnmute] = useState<boolean>(true)
   const [volume, setVolume] = useState<number>(10)
   const [tempVol, setTempVol] = useState<number>(10)
   const [progress, setProgress] = useState<number>(0)
@@ -57,11 +57,11 @@ export default function MusicPlayer() {
   }
 
   function toggleVolume() {
-    setSound(!sound)
+    setUnmute(!unmute)
   }
 
   useEffect(()=>{
-    if (sound) {
+    if (unmute) {
       setVolume(tempVol)
       audio.current!.volume = tempVol / 100
     } else {
@@ -69,13 +69,13 @@ export default function MusicPlayer() {
       setVolume(0)
       audio.current!.volume = 0
     }
-  }, [sound])
+  }, [unmute])
 
   function handleVolume(e: FormEvent<HTMLInputElement>) {
     const currentVolume = Number(e.currentTarget.value) 
     setTempVol(currentVolume)    
     setVolume(currentVolume)
-    setSound(true)
+    setUnmute(true)
     audio.current!.volume = currentVolume / 100
   }
 
@@ -139,7 +139,7 @@ export default function MusicPlayer() {
 
         {/* volume */}
         <div className="flex gap-2 items-center">
-          {sound 
+          {unmute 
             ? <FaVolumeUp onClick={()=>toggleVolume()} title="Mute" className="text-white" />
             : <FaVolumeOff onClick={() => toggleVolume()} title="Unmute" className="text-white" />
           }
