@@ -15,9 +15,9 @@ export default function MusicPlayer() {
   const [artist, setArtist] = useState<string>("");
   const [coverImg, setCoverImg] = useState<string>("");
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [unmute, setUnmute] = useState<boolean>(true)
-  const [volume, setVolume] = useState<number>(10)
-  const [tempVol, setTempVol] = useState<number>(10)
+  const [volume, setVolume] = useState<number>(Number(localStorage.getItem('volume') || "") || 0)
+  const [unmute, setUnmute] = useState<boolean>(Boolean(volume) || false)
+  const [tempVol, setTempVol] = useState<number>(volume)
   const [progress, setProgress] = useState<number>(0)
   const [repeat, setRepeat] = useState<RepeatOptions>('DISABLED')
   const [seekTime, setSeekTime] = useState('0')
@@ -80,10 +80,6 @@ export default function MusicPlayer() {
     }
   }
 
-  function toggleVolume() {
-    setUnmute(!unmute)
-  }
-
   useEffect(()=>{
     if (unmute) {
       setVolume(tempVol)
@@ -99,9 +95,13 @@ export default function MusicPlayer() {
     const currentVolume = Number(e.currentTarget.value) 
     setTempVol(currentVolume)    
     setVolume(currentVolume)
-    setUnmute(true)
     audio.current!.volume = currentVolume / 100
   }
+
+  useEffect(() => {
+    volume ? setUnmute(true) : setUnmute(false)
+    localStorage.setItem("volume", String(volume));
+  }, [volume])
 
   function updateProgress(e: SyntheticEvent<HTMLAudioElement, Event>) {
     const { duration, currentTime } = e.currentTarget;
@@ -207,8 +207,8 @@ export default function MusicPlayer() {
         {/* volume */}
         <div className="flex gap-2 items-center">
           {unmute 
-            ? <FaVolumeUp onClick={()=>toggleVolume()} title="Mute" className="text-white" />
-            : <FaVolumeOff onClick={() => toggleVolume()} title="Unmute" className="text-white" />
+            ? <FaVolumeUp onClick={()=>setUnmute(!unmute)} title="Mute" className="text-white" />
+            : <FaVolumeOff onClick={() => setUnmute(!unmute)} title="Unmute" className="text-white" />
           }
           <div className="w-[150px] py-3">
             <input type="range" 
