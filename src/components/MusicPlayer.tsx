@@ -115,6 +115,7 @@ export default function MusicPlayer() {
 
   function checkSrc() {
     if (audio.current!.currentSrc) {
+      alert("Audio not available for current song.")
       nextSong()
     }
   }
