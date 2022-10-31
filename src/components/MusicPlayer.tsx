@@ -117,6 +117,8 @@ export default function MusicPlayer() {
 
   function checkSrc() {
     if (audio.current!.currentSrc) {
+      setIsPlaying(false)
+      setProgress(0)
       alert("Audio not available for current song.")
       nextSong()
     }
@@ -185,8 +187,8 @@ export default function MusicPlayer() {
           </div>
 
           {/* music progress */}
-          <div className="flex gap-3 items-center text-xs text-white">
-            <span>
+          <div className="relative flex gap-2 items-center text-xs text-white">
+            <span className="absolute -left-9">
               {audio.current?.currentTime 
                 ? hh_mm_ss(audio.current!.currentTime) 
                 : '0:00'}
