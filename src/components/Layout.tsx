@@ -2,10 +2,12 @@ import MusicPlayer from "../components/MusicPlayer";
 import Searchbar from "../components/Searchbar";
 import Sidebar from "../components/Sidebar";
 import { Outlet } from "react-router-dom";
+import { useSongsContext } from "../context/SongsContext";
 
 
 export default function Layout() {
-  
+  const { songs } = useSongsContext()
+
   
   return (
     <>
@@ -19,7 +21,7 @@ export default function Layout() {
           
         </div>
 
-        <MusicPlayer />
+        {songs.length > 0 && <MusicPlayer />}
 
       </div>
     </>
