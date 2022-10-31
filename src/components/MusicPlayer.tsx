@@ -3,9 +3,9 @@ import { FaPlay, FaPause, FaVolumeOff, FaVolumeUp } from "react-icons/fa";
 import { TbRepeatOnce, TbRepeat } from "react-icons/tb";
 import { BsSkipEndFill, BsSkipStartFill } from "react-icons/bs";
 import { MouseEvent, FormEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
-import { songs } from "../songs";
 import { RepeatOptions } from "../types";
 import { getRandomNum, hh_mm_ss } from "../hooks/useHooks";
+import { useSongsContext } from "../context/SongsContext";
 
 
 export default function MusicPlayer() {
@@ -25,17 +25,23 @@ export default function MusicPlayer() {
   const [randomIndex, setRandomIndex] = useState(0)
   const audio = useRef<HTMLMediaElement>(null);
   const progressBar = useRef<HTMLInputElement>(null);
+  const { songs } = useSongsContext()
 
   function loadSong(songIndex: number){
-    setSongSrc(songs[songIndex].music)
-    setSongTitle(songs[songIndex].name)
-    setArtist(songs[songIndex].artist)
-    setCoverImg(songs[songIndex].img)
+    setSongSrc(songs[songIndex]?.audio)
+    setSongTitle(songs[songIndex]?.title)
+    setArtist(songs[songIndex]?.artist)
+    setCoverImg(songs[songIndex]?.cover)
   }
 
   useEffect(()=>{
     loadSong(songIndex);
   }, [songIndex])
+
+  useEffect(()=>{
+    loadSong(songIndex);
+    playSong();
+  }, [songs])
   
   function playSong() {
     setIsPlaying(true)
