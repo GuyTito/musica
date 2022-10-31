@@ -82,16 +82,12 @@ export default function Searchbar() {
           <button onClick={()=>closeModal()} className="py-1 px-[10px] rounded-full border-[3px] border-secondary text-secondary absolute right-[5%]">&#x2715;</button>
 
           {!isLoading ?
-            // <div className="flex gap-3 hover:bg-gray-500 w-fit p-2 rounded-2xl cursor-pointer">
-            //   <img src={song?.cover} className="w-40 h-40 rounded-[14px]" alt="" />
-            //   <div>
-            //     <p className="text-3xl font-bold">{song?.title}</p>
-            //     <p className="text-gray-300">{song?.artist}</p>
-            //   </div>
-            // </div>
             <div className="w-[85%] h-[80%] overflow-y-scroll space-y-3">
               {tracks.length > 0 && tracks.map(music => (
-                <div onClick={() => getSong(`${music?.name} ${music?.artists[0]?.name}`)} key={music?.id} className="cursor-pointer flex gap-2 items-center hover:bg-gray-500 p-1">
+                <div key={music?.id} title="Play"
+                  onClick={()=>getSong(`${music?.name} ${music?.artists[0]?.name}`)}  
+                  className="cursor-pointer flex gap-2 items-center hover:bg-gray-500 p-1"
+                >
                   <img src={music?.album?.cover[0]?.url} className="w-10 h-10" alt="" />
                   <div>
                     <p className="font-bold">{music?.name}</p>
