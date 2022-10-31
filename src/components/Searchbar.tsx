@@ -1,15 +1,17 @@
 import { FormEvent, useState } from "react";
 import search from "../assets/icons/search.png";
 import loading from "../assets/loading.png";
+import { useSongsContext } from "../context/SongsContext";
 import { SongData, TracksData } from "../types";
 
 
 export default function Searchbar() {
   const [modal, setModal] = useState(false)
-  const [song, setSong] = useState<SongData>({} as SongData)
   const [tracks, setTracks] = useState<TracksData>([])
   const [searchTerm, setSearchTerm] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const { playSong } = useSongsContext()
+
 
   const options = {
     method: 'GET',
@@ -25,13 +27,15 @@ export default function Searchbar() {
     try {
       const data = await response.json()
       setIsLoading(false)
-      setSong({
+      const song: SongData = {
         artist: data.spotifyTrack?.artists[0]?.name,
         title: data.spotifyTrack?.name,
         audio: data.soundcloudTrack?.audio[0]?.url,
         duration: data.soundcloudTrack?.audio[0]?.durationText,
         cover: data.spotifyTrack?.album?.cover[0]?.url
-      })
+      }
+      playSong(song)
+      closeModal()
     } catch (error) {
       console.log('error', error)
     }
@@ -87,11 +91,11 @@ export default function Searchbar() {
             // </div>
             <div className="w-[85%] h-[80%] overflow-y-scroll space-y-3">
               {tracks.length > 0 && tracks.map(music => (
-                <div key={music?.id} className="cursor-pointer flex gap-2 items-center hover:bg-gray-500 p-1">
+                <div onClick={() => getSong(`${music?.name} ${music?.artists[0]?.name}`)} key={music?.id} className="cursor-pointer flex gap-2 items-center hover:bg-gray-500 p-1">
                   <img src={music?.album?.cover[0]?.url} className="w-10 h-10" alt="" />
                   <div>
-                    <p className="font-bold">{music?.artists[0]?.name}</p>
-                    <p className="text-xs text-gray-300">{music?.name}</p>
+                    <p className="font-bold">{music?.name}</p>
+                    <p className="text-xs text-gray-300">{music?.artists[0]?.name}</p>
                   </div>
                   <span className="ml-auto">{music?.durationText}</span>
                 </div>
