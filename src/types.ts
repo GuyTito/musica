@@ -25,3 +25,12 @@ export type TracksData = Array<{
   name: string
   durationText: string
 }>
+
+export interface SongsProviderProps {
+  children: JSX.Element
+}
+
+export interface SongsContextType {
+  songs: SongData[]
+  playSong: (song: SongData)=> void
+}
