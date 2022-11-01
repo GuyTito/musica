@@ -19,7 +19,7 @@ export default function MusicPlayer() {
   const [unmute, setUnmute] = useState<boolean>(Boolean(volume) || false)
   const [tempVol, setTempVol] = useState<number>(volume)
   const [progress, setProgress] = useState<number>(0)
-  const [repeat, setRepeat] = useState<RepeatOptions>('DISABLED')
+  const [repeat, setRepeat] = useState<RepeatOptions>(((localStorage.getItem('repeat') || "") || 'DISABLED') as RepeatOptions)
   const [seekTime, setSeekTime] = useState('0')
   const [shuffled, setShuffled] = useState(false)
   const [randomIndex, setRandomIndex] = useState(0)
@@ -134,6 +134,10 @@ export default function MusicPlayer() {
     if (repeat === 'DISABLED') pauseSong()
   }
 
+  useEffect(() => {
+    localStorage.setItem("repeat", repeat);
+  }, [repeat])
+
   function showSeekTime(e: MouseEvent<HTMLInputElement, globalThis.MouseEvent>) {
     const width = progressBar.current!.clientWidth
     const clickX = e.nativeEvent.offsetX
@@ -164,8 +168,7 @@ export default function MusicPlayer() {
         <div className="flex flex-col gap-6 items-center">
           {/* music controls */}
           <div className="flex gap-10">
-            <TfiControlShuffle 
-              onClick={() => setShuffled(!shuffled)} 
+            <TfiControlShuffle onClick={() => setShuffled(!shuffled)} 
               title={shuffled ? "Disable Shuffle" : 'Shuffle'} 
               className={`w-6 h-6 ${shuffled && 'text-secondary'}`} 
             />
