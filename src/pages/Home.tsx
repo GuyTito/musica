@@ -3,13 +3,14 @@ import hug from "../assets/hug.png";
 import heart from "../assets/icons/heart.svg";
 import bubble from "../assets/bubble.png";
 import HoleheartSVG from "../assets/icons/HoleheartSVG";
-import { PlaylistType } from "../types";
+import { PlaylistType, SongData } from "../types";
+import { addTimes } from '../hooks/useHooks';
 
 
 
 export default function Home() {
   // https://musica-api.up.railway.app/playlist
-  const [playlist, setPlaylist] = useState<PlaylistType[]>([])
+  const [playlists, setPlaylists] = useState<PlaylistType[]>([])
  
   async function fetchSongs(url: string) {
     const response = await fetch(url)
@@ -23,8 +24,17 @@ export default function Home() {
 
   useEffect(()=>{
     fetchSongs('https://musica-api.up.railway.app/playlist')
-      .then(data => setPlaylist(data))
+      .then(data => setPlaylists(data))
   }, [])
+
+  function getArtists(files: SongData[]){
+    const artists: Array<string> = []
+    files.forEach((file: SongData) => {
+      if (!artists.includes(file.artist)) artists.push(file.artist)
+    })
+    return artists.join(', ').substring(0, 50)
+  }
+
 
   return (
     <>
@@ -50,13 +60,13 @@ export default function Home() {
         <div className=" w-[40%]">
           <h2 className="mb-[14px] text-2xl font-bold">Top Charts</h2>
           <div className="space-y-3 h-[350px] overflow-y-scroll">
-            {playlist.length > 0 && playlist.map((song: PlaylistType) => (
+            {playlists.length > 0 && playlists.map((song: PlaylistType) => (
               <div key={song.id} className="flex items-center justify-between p-4 rounded-[20px] bg-dark-alt ">
                 <div className="flex items-center gap-4 ">
                   <img src={song.cover} className="w-16 h-16 rounded-[10px]" alt="" />
                   <div className="flex flex-col gap-1">
                     <h3 className="text-base">{song.title}</h3>
-                    {/* <span className="text-white/50 text-xs">{song.artist}</span> */}
+                    <span className="text-white/50 text-xs">{getArtists(song.files)}...</span>
                     {/* <span className="text-xs">{song.duration}</span> */}
                   </div>
                 </div>
