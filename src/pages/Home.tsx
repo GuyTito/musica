@@ -1,15 +1,31 @@
+import { useEffect, useState } from 'react';
 import hug from "../assets/hug.png";
 import heart from "../assets/icons/heart.svg";
 import bubble from "../assets/bubble.png";
 import HoleheartSVG from "../assets/icons/HoleheartSVG";
-import golden from "../assets/golden-age.png";
-
+import { PlaylistType } from "../types";
 
 
 
 export default function Home() {
-  
-  
+  // https://musica-api.up.railway.app/playlist
+  const [playlist, setPlaylist] = useState<PlaylistType[]>([])
+ 
+  async function fetchSongs(url: string) {
+    const response = await fetch(url)
+    try {
+      const data = await response.json()
+      return data
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  useEffect(()=>{
+    fetchSongs('https://musica-api.up.railway.app/playlist')
+      .then(data => setPlaylist(data))
+  }, [])
+
   return (
     <>
       <div className="flex gap-5">
@@ -33,22 +49,24 @@ export default function Home() {
         {/* top charts */}
         <div className=" w-[40%]">
           <h2 className="mb-[14px] text-2xl font-bold">Top Charts</h2>
-          <div className="space-y-3 ">
-            <div className="flex items-center justify-between p-4 rounded-[20px] bg-dark-alt ">
-              <div className="flex items-center gap-4 ">
-                <img src={golden} className="rounded-[10px]" alt="" />
-                <div className="flex flex-col gap-1">
-                  <h3 className="text-base">Golden age of 80s</h3>
-                  <span className="text-white/50 text-xs">Sean Swadder</span>
-                  <span className="text-xs">2:34:45</span>
+          <div className="space-y-3 h-[350px] overflow-y-scroll">
+            {playlist.length > 0 && playlist.map((song: PlaylistType) => (
+              <div key={song.id} className="flex items-center justify-between p-4 rounded-[20px] bg-dark-alt ">
+                <div className="flex items-center gap-4 ">
+                  <img src={song.cover} className="w-16 h-16 rounded-[10px]" alt="" />
+                  <div className="flex flex-col gap-1">
+                    <h3 className="text-base">{song.title}</h3>
+                    {/* <span className="text-white/50 text-xs">{song.artist}</span> */}
+                    {/* <span className="text-xs">{song.duration}</span> */}
+                  </div>
+                </div>
+                <div>
+                  <button className="p-[10px] rounded-full border border-light-o">
+                    <HoleheartSVG />
+                  </button>
                 </div>
               </div>
-              <div>
-                <button className="p-[10px] rounded-full border border-light-o">
-                  <HoleheartSVG />
-                </button>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
