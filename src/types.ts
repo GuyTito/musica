@@ -34,3 +34,11 @@ export interface SongsContextType {
   songs: SongData[]
   playSong: (song: SongData)=> void
 }
+
+export interface PlaylistType{
+  id: string
+  title: string
+  cover: string
+  info: string
+  files: SongData[]
+}
