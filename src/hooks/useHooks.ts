@@ -11,23 +11,15 @@ export function hh_mm_ss(totalSeconds: number) {
   return new Date(totalSeconds * 1000).toISOString().substring(14, 19)
 }
 
-// Add two string time values (HH:mm:ss) with javascript
-export function addTimes(startTime: string, endTime: string) {
-  var a = startTime.split(":");
-  var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
-  var b = endTime.split(":");
-  var seconds2 = (+b[0]) * 60 * 60 + (+b[1]) * 60 + (+b[2]);
-
-  var date = new Date(1970, 0, 1);
-  date.setSeconds(seconds + seconds2);
-
-  var c = date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
-
-  return c
-}
-
 // convert hh:mm:ss to seconds
 export function convertToSeconds(str: string){
-  const [hours, minutes, seconds] = str.split(':');
-  return Number(hours) * 60 * 60 + Number(minutes) * 60 + Number(seconds);
+  // const [hours, minutes, seconds] = str.split(':');
+  // return Number(hours) * 60 * 60 + Number(minutes) * 60 + Number(seconds);
+
+  const timeArray = str.split(':');
+  if (timeArray.length == 2) {
+    return Number(timeArray[0]) * 60 + Number(timeArray[1]);
+  } else {
+    return Number(timeArray[0]) * 60 * 60 + Number(timeArray[1]) * 60 + Number(timeArray[2]);
+  }
 }

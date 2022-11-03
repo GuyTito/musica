@@ -4,7 +4,7 @@ import heart from "../assets/icons/heart.svg";
 import bubble from "../assets/bubble.png";
 import HoleheartSVG from "../assets/icons/HoleheartSVG";
 import { PlaylistType, SongData } from "../types";
-import { addTimes, convertToSeconds, hh_mm_ss } from '../hooks/useHooks';
+import { convertToSeconds, hh_mm_ss } from '../hooks/useHooks';
 
 
 
@@ -36,11 +36,11 @@ export default function Home() {
   }
 
   function totalDuration(files: SongData[]) {
-    let total: string = '00:00:00';
+    let total: number = 0;
     files.forEach((file: SongData) => {
-      total = addTimes(total, `00:0${file.duration}`)
+      total = total + convertToSeconds(file.duration)
     })
-    return hh_mm_ss(convertToSeconds(total))
+    return hh_mm_ss(total)
   }
 
 
