@@ -5,6 +5,7 @@ export interface IconProps {
 export type RepeatOptions = 'ONE' | 'ENABLED' | 'DISABLED'
 
 export interface SongData {
+  id: string
   artist: string
   title: string
   audio: string

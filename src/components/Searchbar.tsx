@@ -28,6 +28,7 @@ export default function Searchbar() {
       const data = await response.json()
       setIsLoading(false)
       const song: SongData = {
+        id: data.spotifyTrack?.id,
         artist: data.spotifyTrack?.artists[0]?.name,
         title: data.spotifyTrack?.name,
         audio: data.soundcloudTrack?.audio[0]?.url,
