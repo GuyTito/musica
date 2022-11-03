@@ -11,6 +11,7 @@ import { convertToSeconds, hh_mm_ss } from '../hooks/useHooks';
 export default function Home() {
   // https://musica-api.up.railway.app/playlist
   const [playlists, setPlaylists] = useState<PlaylistType[]>([])
+  const [newReleases, setNewReleases] = useState<SongData[]>([])
  
   async function fetchSongs(url: string) {
     const response = await fetch(url)
@@ -25,6 +26,8 @@ export default function Home() {
   useEffect(()=>{
     fetchSongs('https://musica-api.up.railway.app/playlist')
       .then(data => setPlaylists(data))
+    fetchSongs('https://musica-api.up.railway.app/new')
+      .then(data => setNewReleases(data))
   }, [])
 
   function getArtists(files: SongData[]){
@@ -92,11 +95,14 @@ export default function Home() {
       {/* new releases */}
       <div className="mt-10">
         <h2 className="mb-3 font-bold text-2xl">New releases</h2>
-        <div>
-          <div>
-            <img src={bubble} className="rounded-3xl" alt="" />
-            <span className="text-xs">Life in a bubble</span>
-          </div>
+        <div className='flex items-center overflow-x-scroll gap-7 py-2'>
+          {newReleases.length > 0 && newReleases.map((song: SongData) => (
+            <div key={song.id} className="flex-shrink-0 flex flex-col gap-1">
+              <img src={song.cover} className="rounded-3xl w-[153px] h-[153px]" alt="" />
+              <span>{song.title}</span>
+              <span className="text-white/50 text-xs">{song.artist}</span>
+            </div>
+          ))}
         </div>
       </div>
     </>
