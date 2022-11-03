@@ -34,7 +34,7 @@ export default function Home() {
       .then(data => setPopular(data))
   }, [])
 
-  function getArtists(files: SongData[]){
+  function displayArtists(files: SongData[]){
     const artists: Array<string> = []
     files.forEach((file: SongData) => {
       if (!artists.includes(file.artist)) artists.push(file.artist)
@@ -81,7 +81,7 @@ export default function Home() {
                   <img src={song.cover} className="w-16 h-16 rounded-[10px]" alt="" />
                   <div className="flex flex-col gap-1">
                     <h3 className="text-base">{song.title}</h3>
-                    <span className="text-white/50 text-xs">{getArtists(song.files)}...</span>
+                    <span className="text-white/50 text-xs">{displayArtists(song.files)}...</span>
                     <span className="text-xs">{totalDuration(song.files)}</span>
                   </div>
                 </div>
