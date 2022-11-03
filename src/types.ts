@@ -1,6 +1,10 @@
 export interface IconProps {
   className?: string
 }
+export interface SongsSliderProps {
+  songs: SongData[]
+  title: string
+}
 
 export type RepeatOptions = 'ONE' | 'ENABLED' | 'DISABLED'
 
