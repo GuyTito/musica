@@ -19,7 +19,7 @@ export default function MusicPlayer() {
   const [unmute, setUnmute] = useState<boolean>(Boolean(volume) || false)
   const [tempVol, setTempVol] = useState<number>(volume)
   const [progress, setProgress] = useState<number>(0)
-  const [repeat, setRepeat] = useState<RepeatOptions>(((localStorage.getItem('repeat') || "") || 'DISABLED') as RepeatOptions)
+  const [repeat, setRepeat] = useState<RepeatOptions>(((localStorage.getItem('repeat') || "") || 'ENABLED') as RepeatOptions)
   const [seekTime, setSeekTime] = useState('0')
   const [shuffled, setShuffled] = useState(false)
   const [randomIndex, setRandomIndex] = useState(0)
