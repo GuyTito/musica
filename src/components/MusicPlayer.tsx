@@ -25,7 +25,7 @@ export default function MusicPlayer() {
   const [randomIndex, setRandomIndex] = useState(0)
   const audio = useRef<HTMLMediaElement>(null);
   const progressBar = useRef<HTMLInputElement>(null);
-  const { songs } = useSongsContext()
+  const { songs, contextSongIndex } = useSongsContext()
 
   function loadSong(songIndex: number){
     setSongSrc(songs[songIndex]?.audio)
@@ -39,7 +39,7 @@ export default function MusicPlayer() {
   }, [songIndex])
 
   useEffect(()=>{
-    loadSong(songIndex);
+    loadSong(contextSongIndex);
     playSong();
   }, [songs])
   
