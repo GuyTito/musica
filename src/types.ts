@@ -38,6 +38,9 @@ export interface SongsProviderProps {
 export interface SongsContextType {
   songs: SongData[]
   playSong: (song: SongData)=> void
+  playlists: PlaylistType[]
+  newReleases: SongData[]
+  popular: SongData[]
 }
 
 export interface PlaylistType{

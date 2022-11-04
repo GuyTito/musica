@@ -1,38 +1,16 @@
 import { useEffect, useState } from 'react';
 import hug from "../assets/hug.png";
 import heart from "../assets/icons/heart.svg";
-import bubble from "../assets/bubble.png";
 import HoleheartSVG from "../assets/icons/HoleheartSVG";
 import { PlaylistType, SongData } from "../types";
 import { convertToSeconds, hh_mm_ss } from '../hooks/useHooks';
 import SongsSlider from '../components/SongsSlider';
+import { useSongsContext } from '../context/SongsContext';
 
 
 
 export default function Home() {
-  // https://musica-api.up.railway.app/playlist
-  const [playlists, setPlaylists] = useState<PlaylistType[]>([])
-  const [newReleases, setNewReleases] = useState<SongData[]>([])
-  const [popular, setPopular] = useState<SongData[]>([])
- 
-  async function fetchSongs(url: string) {
-    const response = await fetch(url)
-    try {
-      const data = await response.json()
-      return data
-    } catch (error) {
-      console.log('error', error)
-    }
-  }
-
-  useEffect(()=>{
-    fetchSongs('https://musica-api.up.railway.app/playlist')
-      .then(data => setPlaylists(data))
-    fetchSongs('https://musica-api.up.railway.app/new')
-      .then(data => setNewReleases(data))
-    fetchSongs('https://musica-api.up.railway.app/popular')
-      .then(data => setPopular(data))
-  }, [])
+  const { playlists, newReleases, popular } = useSongsContext()
 
   function displayArtists(files: SongData[]){
     const artists: Array<string> = []
