@@ -14,6 +14,7 @@ export default function SongsProvider({ children }: SongsProviderProps) {
   const [playlists, setPlaylists] = useState<PlaylistType[]>([])
   const [newReleases, setNewReleases] = useState<SongData[]>([])
   const [popular, setPopular] = useState<SongData[]>([])
+  const [contextSongIndex, setContextSongIndex] = useState(0)
 
   async function fetchSongs(url: string) {
     const response = await fetch(url)
@@ -37,11 +38,17 @@ export default function SongsProvider({ children }: SongsProviderProps) {
   function playSong(song: SongData){
     setSongs([song])
   }
+
+  function playSongs(songs: SongData[], index: number){
+    setSongs(songs)
+    setContextSongIndex(index)
+  }
+
   
   return (
     <>
       <SongsContext.Provider value={{
-        songs, playSong, playlists, newReleases, popular }}>
+        songs, playSong, playlists, newReleases, popular, contextSongIndex, playSongs }}>
         {children}
       </SongsContext.Provider>
     </>
