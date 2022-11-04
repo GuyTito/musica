@@ -41,6 +41,8 @@ export interface SongsContextType {
   playlists: PlaylistType[]
   newReleases: SongData[]
   popular: SongData[]
+  contextSongIndex: number
+  playSongs: (songs: SongData[], index: number) => void
 }
 
 export interface PlaylistType{
