@@ -6,7 +6,7 @@ import { useSongsContext } from "../context/SongsContext";
 
 
 export default function Layout() {
-  const { songs } = useSongsContext()
+  const { queue } = useSongsContext()
 
   
   return (
@@ -21,7 +21,7 @@ export default function Layout() {
           
         </div>
 
-        {songs.length > 0 && <MusicPlayer />}
+        {queue.length > 0 && <MusicPlayer />}
 
       </div>
     </>

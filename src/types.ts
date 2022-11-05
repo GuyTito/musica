@@ -36,7 +36,7 @@ export interface SongsProviderProps {
 }
 
 export interface SongsContextType {
-  songs: SongData[]
+  queue: SongData[]
   playSong: (song: SongData)=> void
   playlists: PlaylistType[]
   newReleases: SongData[]

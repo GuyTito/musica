@@ -10,7 +10,7 @@ export function useSongsContext() {
 
 
 export default function SongsProvider({ children }: SongsProviderProps) {
-  const [songs, setSongs] = useState([] as SongData[])
+  const [queue, setQueue] = useState([] as SongData[])
   const [playlists, setPlaylists] = useState<PlaylistType[]>([])
   const [newReleases, setNewReleases] = useState<SongData[]>([])
   const [popular, setPopular] = useState<SongData[]>([])
@@ -36,12 +36,12 @@ export default function SongsProvider({ children }: SongsProviderProps) {
   }, [])
 
   function playSong(song: SongData){
-    setSongs([song])
+    setQueue([song])
     setContextSongIndex(0)
   }
 
   function playSongs(songs: SongData[], index: number){
-    setSongs(songs)
+    setQueue(songs)
     setContextSongIndex(index)
   }
 
@@ -49,7 +49,7 @@ export default function SongsProvider({ children }: SongsProviderProps) {
   return (
     <>
       <SongsContext.Provider value={{
-        songs, playSong, playlists, newReleases, popular, contextSongIndex, playSongs }}>
+        queue, playSong, playlists, newReleases, popular, contextSongIndex, playSongs }}>
         {children}
       </SongsContext.Provider>
     </>

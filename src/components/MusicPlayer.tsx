@@ -25,13 +25,13 @@ export default function MusicPlayer() {
   const [randomIndex, setRandomIndex] = useState(0)
   const audio = useRef<HTMLMediaElement>(null);
   const progressBar = useRef<HTMLInputElement>(null);
-  const { songs, contextSongIndex } = useSongsContext()
+  const { queue, contextSongIndex } = useSongsContext()
 
   function loadSong(songIndex: number){
-    setSongSrc(songs[songIndex]?.audio)
-    setSongTitle(songs[songIndex]?.title)
-    setArtist(songs[songIndex]?.artist)
-    setCoverImg(songs[songIndex]?.cover)
+    setSongSrc(queue[songIndex]?.audio)
+    setSongTitle(queue[songIndex]?.title)
+    setArtist(queue[songIndex]?.artist)
+    setCoverImg(queue[songIndex]?.cover)
   }
 
   useEffect(()=>{
@@ -42,7 +42,7 @@ export default function MusicPlayer() {
     setSongIndex(contextSongIndex)
     loadSong(songIndex)
     playSong();
-  }, [songs])
+  }, [queue])
   
   function playSong() {
     setIsPlaying(true)
@@ -59,12 +59,12 @@ export default function MusicPlayer() {
 
   function nextSong() {
     if (shuffled) {
-      const randomNum = getRandomNum((songs.length - 1))
+      const randomNum = getRandomNum((queue.length - 1))
       setRandomIndex(randomNum)
       loadSong(randomIndex)
       playSong();
     } else {
-      if (songIndex === (songs.length - 1)) setSongIndex(0)
+      if (songIndex === (queue.length - 1)) setSongIndex(0)
       else setSongIndex(songIndex + 1)
       playSong();
     }
@@ -75,7 +75,7 @@ export default function MusicPlayer() {
       loadSong(randomIndex)
       playSong();
     } else {
-      if (songIndex === 0) setSongIndex(songs.length - 1)
+      if (songIndex === 0) setSongIndex(queue.length - 1)
       else setSongIndex(songIndex - 1)
       playSong();
     }
