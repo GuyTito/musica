@@ -1,5 +1,5 @@
 import hug from "../assets/hug.png";
-import heart from "../assets/icons/heart.svg";
+import heart from "../assets/icons/Heart.svg";
 import HoleheartSVG from "../assets/icons/HoleheartSVG";
 import { PlaylistType, SongData } from "../types";
 import { convertToSeconds, hh_mm_ss } from '../hooks/useHooks';
