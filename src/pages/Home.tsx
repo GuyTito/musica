@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import hug from "../assets/hug.png";
 import heart from "../assets/icons/heart.svg";
 import HoleheartSVG from "../assets/icons/HoleheartSVG";
