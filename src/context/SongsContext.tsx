@@ -37,6 +37,7 @@ export default function SongsProvider({ children }: SongsProviderProps) {
 
   function playSong(song: SongData){
     setSongs([song])
+    setContextSongIndex(0)
   }
 
   function playSongs(songs: SongData[], index: number){
