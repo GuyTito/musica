@@ -39,7 +39,7 @@ export default function MusicPlayer() {
   }, [songIndex])
 
   useEffect(()=>{
-    loadSong(contextSongIndex);
+    setSongIndex(contextSongIndex)
     playSong();
   }, [songs])
   
@@ -65,7 +65,6 @@ export default function MusicPlayer() {
     } else {
       if (songIndex === (songs.length - 1)) setSongIndex(0)
       else setSongIndex(songIndex + 1)
-      loadSong(songIndex)
       playSong();
     }
   }
@@ -77,7 +76,6 @@ export default function MusicPlayer() {
     } else {
       if (songIndex === 0) setSongIndex(songs.length - 1)
       else setSongIndex(songIndex - 1)
-      loadSong(songIndex);
       playSong();
     }
   }
@@ -168,19 +166,24 @@ export default function MusicPlayer() {
         <div className="flex flex-col gap-6 items-center">
           {/* music controls */}
           <div className="flex gap-10">
+            {/* shuffle button */}
             <TfiControlShuffle onClick={() => setShuffled(!shuffled)} 
               title={shuffled ? "Disable Shuffle" : 'Shuffle'} 
               className={`w-6 h-6 ${shuffled && 'text-secondary'}`} 
             />
+            {/* previous button */}
             <BsSkipStartFill onClick={() => prevSong()} title="Previous" className="w-6 h-6 hover:text-white" />
+            {/* play button */}
             <button className="rounded-full bg-secondary shadow-[0px_0px_18px_rgba(255,255,255,0.3)] hover:shadow-[0px_0px_18px_white]">
               { isPlaying 
                 ? <FaPause onClick={() => pauseSong()}  className="w-3 h-3 text-white m-2" title='Pause' /> 
                 : <FaPlay onClick={() => playSong()} className="w-3 h-3 text-white m-2" title='Play' />
               }
             </button>
+            {/* next song */}
             <BsSkipEndFill onClick={() => nextSong()} title="Next" className="w-6 h-6 hover:text-white" />
-
+            
+            {/* repeat button */}
             {repeat === 'DISABLED' && 
               <TbRepeat title="Enable repeat" className="w-6 h-6" onClick={() => setRepeat('ENABLED')} />}
             {repeat === 'ENABLED' && 
