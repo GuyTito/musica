@@ -15,7 +15,7 @@ export default function MusicPlayer() {
   const [artist, setArtist] = useState<string>("");
   const [coverImg, setCoverImg] = useState<string>("");
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [volume, setVolume] = useState<number>(Number(localStorage.getItem('volume') || "") || 0)
+  const [volume, setVolume] = useState<number>(Number(localStorage.getItem('volume') || "") || 50)
   const [unmute, setUnmute] = useState<boolean>(Boolean(volume) || false)
   const [tempVol, setTempVol] = useState<number>(volume)
   const [progress, setProgress] = useState<number>(0)
@@ -40,6 +40,7 @@ export default function MusicPlayer() {
 
   useEffect(()=>{
     setSongIndex(contextSongIndex)
+    loadSong(songIndex)
     playSong();
   }, [songs])
   
