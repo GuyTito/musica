@@ -17,20 +17,6 @@ export interface SongData {
   cover: string
 }
 
-export type TracksData = Array<{
-  album: {
-    cover: Array<{
-      url: string
-    }>
-  }
-  artists: Array<{
-    name: string
-  }>
-  id: string
-  name: string
-  durationText: string
-}>
-
 export interface SongsProviderProps {
   children: JSX.Element
 }
