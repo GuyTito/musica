@@ -1,62 +1,30 @@
 import { FormEvent, useState } from "react";
 import search from "../assets/icons/search.png";
-import loading from "../assets/loading.png";
 import { useSongsContext } from "../context/SongsContext";
-import { SongData, TracksData } from "../types";
+import { SongData } from "../types";
 
 
 export default function Searchbar() {
   const [modal, setModal] = useState(false)
-  const [tracks, setTracks] = useState<TracksData>([])
+  const [tracks, setTracks] = useState<SongData[]>([])
   const [searchTerm, setSearchTerm] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const { playSong } = useSongsContext()
+  const { playSong, newReleases, popular } = useSongsContext()
 
-
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': import.meta.env.VITE_API_KEY,
-      'X-RapidAPI-Host': 'spotify-scraper.p.rapidapi.com'
-    }
-  };
-
-  async function getSong(songTerm: string){
-    setIsLoading(true)
-    const response = await fetch(`https://spotify-scraper.p.rapidapi.com/v1/track/download/soundcloud?track=${songTerm}`, options)
-    try {
-      const data = await response.json()
-      setIsLoading(false)
-      const song: SongData = {
-        id: data.spotifyTrack?.id,
-        artist: data.spotifyTrack?.artists[0]?.name,
-        title: data.spotifyTrack?.name,
-        audio: data.soundcloudTrack?.audio[0]?.url,
-        duration: data.soundcloudTrack?.audio[0]?.durationText,
-        cover: data.spotifyTrack?.album?.cover[0]?.url
+  async function searchSong(songTerm: string, songs: SongData[]){
+    songs.forEach((item) => {
+      if (item.artist.toLowerCase().includes(songTerm) || item.title.toLowerCase().includes(songTerm)) {
+        setTracks(prevState => [...prevState, item])
       }
-      playSong(song)
-      closeModal()
-    } catch (error) {
-      console.log('error', error)
-    }
-  }
-
-  async function searchSong(songTerm: string){
-    setIsLoading(true)
-    const response = await fetch(`https://spotify-scraper.p.rapidapi.com/v1/search?term=${songTerm}`, options)
-    try {
-      const data = await response.json()
-      setIsLoading(false)
-      setTracks(data?.tracks?.items)     
-    } catch (error) {
-      console.log('error', error)
-    }
+    });
   }
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    if (searchTerm) searchSong(searchTerm)
+    setTracks([])
+    if (searchTerm) {
+      searchSong((searchTerm.toLowerCase()), popular)
+      searchSong((searchTerm.toLowerCase()), newReleases)
+    }
     setModal(true)
   }
 
@@ -82,25 +50,24 @@ export default function Searchbar() {
         <div className="absolute pl-32 bg-dark inset-0 top-[68px] overflow-hidden">
           <button onClick={()=>closeModal()} className="py-1 px-[10px] rounded-full border-[3px] border-secondary text-secondary absolute right-[5%]">&#x2715;</button>
 
-          {!isLoading ?
-            <div className="w-[85%] h-[80%] overflow-y-scroll space-y-3">
-              {tracks.length > 0 && tracks.map(music => (
+          
+          <div className="w-[85%] h-[80%] overflow-y-scroll space-y-3">
+            {tracks.length > 0 
+              ? tracks.map(music => (
                 <div key={music?.id} title="Play"
-                  onClick={()=>getSong(`${music?.name} ${music?.artists[0]?.name}`)}  
+                  onClick={() => playSong(music)}  
                   className="cursor-pointer flex gap-2 items-center hover:bg-gray-500 p-1"
                 >
-                  <img src={music?.album?.cover[0]?.url} className="w-10 h-10" alt="" />
+                  <img src={music?.cover} className="w-10 h-10" alt="" />
                   <div>
-                    <p className="font-bold">{music?.name}</p>
-                    <p className="text-xs text-gray-300">{music?.artists[0]?.name}</p>
+                    <p className="font-bold">{music?.title}</p>
+                    <p className="text-xs text-gray-300">{music?.artist}</p>
                   </div>
-                  <span className="ml-auto">{music?.durationText}</span>
-                </div>
-
-              )) }
-            </div>
-            : <img src={loading} alt="" />
-          }
+                  <span className="ml-auto">{music?.duration}</span>
+                </div> )) 
+              : <p className="font-bold text-secondary">😥 {searchTerm} not available.</p>
+            }
+          </div>
         </div>
       }
     </>
