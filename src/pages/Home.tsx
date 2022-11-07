@@ -5,10 +5,12 @@ import { PlaylistType, SongData } from "../types";
 import { convertToSeconds, hh_mm_ss } from '../hooks/useHooks';
 import SongsSlider from '../components/SongsSlider';
 import { useSongsContext } from '../context/SongsContext';
+import { useNavigate } from "react-router-dom";
 
 
 
 export default function Home() {
+  const navigate = useNavigate()
   const { playlists, newReleases, popular } = useSongsContext()
 
   function displayArtists(files: SongData[]){
@@ -53,7 +55,7 @@ export default function Home() {
           <h2 className="mb-[14px] text-2xl font-bold">Top Charts</h2>
           <div className="space-y-3 h-[350px] overflow-y-scroll">
             {playlists.length > 0 && playlists.map((song: PlaylistType) => (
-              <div key={song.id} className="flex items-center justify-between p-4 rounded-[20px] bg-dark-alt ">
+              <div onClick={() => navigate(`playlist/${song.id}`)} key={song.id} className="flex items-center justify-between p-4 rounded-[20px] bg-dark-alt cursor-pointer">
                 <div className="flex items-center gap-4 ">
                   <img src={song.cover} className="w-16 h-16 rounded-[10px]" alt="" />
                   <div className="flex flex-col gap-1">
