@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import HomeSVG from "../assets/icons/HomeSVG";
 import LogoutSVG from "../assets/icons/LogoutSVG";
 import PlaylistSVG from "../assets/icons/PlaylistSVG";
@@ -15,7 +16,11 @@ export default function Sidebar() {
       <nav className="mt-6 ml-6">
         <div><img src={logo} alt="logo" /></div>
         <div className="mt-10 bg-dark-alt py-6 px-4 rounded-full space-y-7">
-          <HomeSVG />
+          <NavLink to="/">
+            {({ isActive }) => (
+              <HomeSVG className={isActive ? 'fill-secondary' : undefined} />
+            )}
+          </NavLink>
           <PlaylistSVG />
           <VideosSVG />
           <RadioSVG />
