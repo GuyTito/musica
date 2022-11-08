@@ -2,7 +2,7 @@ import hug from "../assets/hug.png";
 import heart from "../assets/icons/Heart.svg";
 import HoleheartSVG from "../assets/icons/HoleheartSVG";
 import { PlaylistType, SongData } from "../types";
-import { convertToSeconds, hh_mm_ss } from '../hooks/useHooks';
+import { convertToSeconds, hh_mm_ss, totalDuration } from '../hooks/useHooks';
 import SongsSlider from '../components/SongsSlider';
 import { useSongsContext } from '../context/SongsContext';
 import { useNavigate } from "react-router-dom";
@@ -19,14 +19,6 @@ export default function Home() {
       if (!artists.includes(file.artist)) artists.push(file.artist)
     })
     return artists.join(', ').substring(0, 50)
-  }
-
-  function totalDuration(files: SongData[]) {
-    let total: number = 0;
-    files.forEach((file: SongData) => {
-      total = total + convertToSeconds(file.duration)
-    })
-    return hh_mm_ss(total)
   }
 
 

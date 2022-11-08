@@ -1,3 +1,5 @@
+import { SongData } from "../types";
+
 // The maximum is inclusive and the minimum is inclusive
 export function getRandomNum(max: number) {
   let min = 0
@@ -22,4 +24,13 @@ export function convertToSeconds(str: string){
   } else {
     return Number(timeArray[0]) * 60 * 60 + Number(timeArray[1]) * 60 + Number(timeArray[2]);
   }
+}
+
+// calculate total duration of a playlist
+export function totalDuration(files: SongData[]) {
+  let total: number = 0;
+  files.forEach((file: SongData) => {
+    total = total + convertToSeconds(file.duration)
+  })
+  return hh_mm_ss(total)
 }
