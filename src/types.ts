@@ -28,7 +28,9 @@ export interface SongsContextType {
   newReleases: SongData[]
   popular: SongData[]
   contextSongIndex: number
-  playSongs: (songs: SongData[], index: number) => void
+  playSongs: (songs: SongData[], index?: number) => void
+  changePlayState: (playState: boolean) => void
+  isPlaying: boolean
 }
 
 export interface PlaylistType{
