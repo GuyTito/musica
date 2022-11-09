@@ -44,18 +44,16 @@ export default function MusicPlayer() {
 
   useEffect(()=>{
     if (isPlaying){
-      setTimeout(function () {
-        audio.current?.play();
-      }, 150);
+      playSong()
     } else{
       audio.current?.pause()
     }
   }, [isPlaying])
-
+  
   function playSong(){
-    changePlayState(false);
+    changePlayState(true)
     setTimeout(function () {
-      changePlayState(true);
+      audio.current?.play();
     }, 150);
   }
 
