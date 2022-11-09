@@ -5,7 +5,7 @@ import { PlaylistType } from "../types";
 export default function Collections() {
   const { myCollections, playlists } = useSongsContext()
   let myPlaylists: PlaylistType[] = []
-  myCollections.forEach((id: string) => {
+  myCollections?.forEach((id: string) => {
     const data = playlists.find(playlist => playlist.id === id) as PlaylistType
     myPlaylists.push(data)
   })
