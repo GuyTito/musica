@@ -1,6 +1,5 @@
 import hug from "../assets/hug.png";
 import heart from "../assets/icons/Heart.svg";
-import HoleheartSVG from "../assets/icons/HoleheartSVG";
 import { PlaylistType, SongData } from "../types";
 import { totalDuration } from '../hooks/useHooks';
 import SongsSlider from '../components/SongsSlider';
@@ -48,7 +47,7 @@ export default function Home() {
           <div className="space-y-3 h-[350px] overflow-y-scroll">
             {playlists.length > 0 && playlists.map((playlist: PlaylistType) => (
               <div key={playlist.id} className="flex items-center justify-between p-4 rounded-[20px] bg-dark-alt">
-                <div onClick={() => navigate(`playlist/${playlist.id}`)} className="flex items-center gap-4  cursor-pointer">
+                <div onClick={() => navigate(`/playlist/${playlist.id}`)} className="flex items-center gap-4  cursor-pointer">
                   <img src={playlist.cover} className="w-16 h-16 rounded-[10px]" alt="" />
                   <div className="flex flex-col gap-1">
                     <h3 className="text-base">{playlist.title}</h3>
