@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const navigate = useNavigate()
-  const { playlists, newReleases, popular } = useSongsContext()
+  const { playlists, newReleases, popular, updateMyCollections } = useSongsContext()
 
   function displayArtists(files: SongData[]){
     const artists: Array<string> = []
@@ -46,18 +46,18 @@ export default function Home() {
         <div className=" w-[40%]">
           <h2 className="mb-[14px] text-2xl font-bold">Top Charts</h2>
           <div className="space-y-3 h-[350px] overflow-y-scroll">
-            {playlists.length > 0 && playlists.map((song: PlaylistType) => (
-              <div onClick={() => navigate(`playlist/${song.id}`)} key={song.id} className="flex items-center justify-between p-4 rounded-[20px] bg-dark-alt cursor-pointer">
-                <div className="flex items-center gap-4 ">
-                  <img src={song.cover} className="w-16 h-16 rounded-[10px]" alt="" />
+            {playlists.length > 0 && playlists.map((playlist: PlaylistType) => (
+              <div key={playlist.id} className="flex items-center justify-between p-4 rounded-[20px] bg-dark-alt">
+                <div onClick={() => navigate(`playlist/${playlist.id}`)} className="flex items-center gap-4  cursor-pointer">
+                  <img src={playlist.cover} className="w-16 h-16 rounded-[10px]" alt="" />
                   <div className="flex flex-col gap-1">
-                    <h3 className="text-base">{song.title}</h3>
-                    <span className="text-white/50 text-xs">{displayArtists(song.files)}...</span>
-                    <span className="text-xs">{totalDuration(song.files)}</span>
+                    <h3 className="text-base">{playlist.title}</h3>
+                    <span className="text-white/50 text-xs">{displayArtists(playlist.files)}...</span>
+                    <span className="text-xs">{totalDuration(playlist.files)}</span>
                   </div>
                 </div>
                 <div>
-                  <button className="p-[10px] rounded-full border border-light-o">
+                  <button onClick={() => updateMyCollections(playlist.id)} className="p-[10px] rounded-full border border-light-o">
                     <HoleheartSVG />
                   </button>
                 </div>
