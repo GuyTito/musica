@@ -40,11 +40,11 @@ export default function MusicPlayer() {
   useEffect(()=>{
     setSongIndex(contextSongIndex)
     loadSong(songIndex)
-    changePlayState(true);
+    playSong();
   }, [queue])
 
   useEffect(()=>{
-    if(isPlaying){
+    if (isPlaying){
       setTimeout(function () {
         audio.current?.play();
       }, 150);
@@ -52,29 +52,35 @@ export default function MusicPlayer() {
       audio.current?.pause()
     }
   }, [isPlaying])
-  
+
+  function playSong(){
+    changePlayState(false);
+    setTimeout(function () {
+      changePlayState(true);
+    }, 150);
+  }
 
   function nextSong() {
     if (shuffled) {
       const randomNum = getRandomNum((queue.length - 1))
       setRandomIndex(randomNum)
       loadSong(randomIndex)
-      changePlayState(true);
+      playSong()
     } else {
       if (songIndex === (queue.length - 1)) setSongIndex(0)
       else setSongIndex(songIndex + 1)
-      changePlayState(true);
+      playSong()
     }
   }
 
   function prevSong() {
     if (shuffled) {
       loadSong(randomIndex)
-      changePlayState(true);
+      playSong()
     } else {
       if (songIndex === 0) setSongIndex(queue.length - 1)
       else setSongIndex(songIndex - 1)
-      changePlayState(true);
+      playSong()
     }
   }
 
