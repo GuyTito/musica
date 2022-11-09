@@ -83,9 +83,12 @@ export default function Playlist() {
                     : !isPlaying ? playButton : pauseButton
                   }
                 </button>
-                <button className="flex items-center gap-2 py-1 px-3 rounded-full bg-white/10 active:bg-white/5 hover:bg-white/20">
+                <button onClick={() => updateMyCollections(playlist.id)} className="flex items-center gap-2 py-1 px-3 rounded-full bg-white/10 active:bg-white/5 hover:bg-white/20">
                   <img src={addtocol} alt="" />
-                  <span>Add to collection</span>
+                  <span>
+                    {myCollections.includes(playlist.id) ? 'Remove from collection' : 'Add to collection'}
+                  </span>
+                  <span></span>
                 </button>
                 <button onClick={() => updateMyCollections(playlist.id)} className="flex justify-center items-center rounded-full bg-white/10 hover:bg-white/20 p-2 text-secondary">
                   {myCollections.includes(playlist.id) ? <FaHeart /> : <BsHeart />}
