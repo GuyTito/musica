@@ -6,12 +6,13 @@ import { totalDuration } from "../hooks/useHooks"
 import { PlaylistType } from "../types"
 import addtocol  from "../assets/icons/music-square-add.png"
 import { useEffect } from "react"
+import { BsHeart } from "react-icons/bs"
 
 export default function Playlist() {
   const { id } = useParams()
   const { playlists } = useSongsContext()
   const playlist = playlists.find(playlist => playlist.id === id) as PlaylistType 
-  const { playSongs, isPlaying, queue, changePlayState } = useSongsContext()
+  const { playSongs, isPlaying, queue, changePlayState, myCollections, updateMyCollections } = useSongsContext()
 
   useEffect(() => {
     // 👇️ set style on body element
@@ -82,7 +83,9 @@ export default function Playlist() {
                   <img src={addtocol} alt="" />
                   <span>Add to collection</span>
                 </button>
-                <button className="flex justify-center items-center rounded-full bg-white/10 hover:bg-white/20"><FaHeart className="m-2 text-red-500 " /></button>
+                <button onClick={() => updateMyCollections(playlist.id)} className="flex justify-center items-center rounded-full bg-white/10 hover:bg-white/20 p-2 text-secondary">
+                  {myCollections.includes(playlist.id) ? <FaHeart /> : <BsHeart />}
+                </button>
               </div>
             </div>
           </div>

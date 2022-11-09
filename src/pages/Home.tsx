@@ -2,16 +2,17 @@ import hug from "../assets/hug.png";
 import heart from "../assets/icons/Heart.svg";
 import HoleheartSVG from "../assets/icons/HoleheartSVG";
 import { PlaylistType, SongData } from "../types";
-import { convertToSeconds, hh_mm_ss, totalDuration } from '../hooks/useHooks';
+import { totalDuration } from '../hooks/useHooks';
 import SongsSlider from '../components/SongsSlider';
 import { useSongsContext } from '../context/SongsContext';
 import { useNavigate } from "react-router-dom";
-
+import { FaHeart } from "react-icons/fa";
+import { BsHeart } from "react-icons/bs";
 
 
 export default function Home() {
   const navigate = useNavigate()
-  const { playlists, newReleases, popular, updateMyCollections } = useSongsContext()
+  const { playlists, newReleases, popular, updateMyCollections, myCollections } = useSongsContext()
 
   function displayArtists(files: SongData[]){
     const artists: Array<string> = []
@@ -20,7 +21,6 @@ export default function Home() {
     })
     return artists.join(', ').substring(0, 50)
   }
-
 
   return (
     <>
@@ -57,9 +57,10 @@ export default function Home() {
                   </div>
                 </div>
                 <div>
-                  <button onClick={() => updateMyCollections(playlist.id)} className="p-[10px] rounded-full border border-light-o">
-                    <HoleheartSVG />
+                  <button onClick={() => updateMyCollections(playlist.id)} className="p-[10px] rounded-full border border-light-o text-secondary">
+                    {myCollections.includes(playlist.id) ? <FaHeart /> : <BsHeart />}
                   </button>
+                  
                 </div>
               </div>
             ))}
