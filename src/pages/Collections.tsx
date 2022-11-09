@@ -29,7 +29,7 @@ export default function Collections() {
               <div onClick={() => navigate(`/playlist/${playlist.id}`)} key={playlist?.id} className="relative rounded-[20px] w-[213px] h-[234px] overflow-hidden cursor-pointer">
                 <img src={playlist?.cover} className="absolute object-cover w-full h-full object-center" alt="" />
                 <div className="absolute z-30 bottom-[22px] ml-5 flex flex-col">
-                  <span className="text-2xl text-light">{playlist?.title}</span>
+                  <span className="text-2xl text-dark font-semibold">{playlist?.title}</span>
                 </div>
               </div>)
             )}
