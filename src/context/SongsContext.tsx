@@ -61,7 +61,9 @@ export default function SongsProvider({ children }: SongsProviderProps) {
   }
 
   function updateMyCollections(playlistId: string){
-    setMyCollections(prevState => [...prevState, playlistId])
+    if (myCollections.includes(playlistId)){
+      setMyCollections(prevState => prevState.filter(id => id !== playlistId))
+    } else setMyCollections(prevState => [...prevState, playlistId])
   }
 
   useEffect(()=>{
