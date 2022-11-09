@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { useSongsContext } from "../context/SongsContext";
 import { PlaylistType } from "../types";
 
 
 export default function Collections() {
+  const navigate = useNavigate()
   const { myCollections, playlists } = useSongsContext()
   let myPlaylists: PlaylistType[] = []
   myCollections?.forEach((id: string) => {
@@ -24,7 +26,7 @@ export default function Collections() {
           {/* my collections */}
           <div className="flex items-center gap-6">
             {myPlaylists.length > 0 && myPlaylists.map((playlist: PlaylistType) => ( 
-              <div key={playlist?.id} className="relative rounded-[20px] w-[213px] h-[234px] overflow-hidden">
+              <div onClick={() => navigate(`/playlist/${playlist.id}`)} key={playlist?.id} className="relative rounded-[20px] w-[213px] h-[234px] overflow-hidden cursor-pointer">
                 <img src={playlist?.cover} className="absolute object-cover w-full h-full object-center" alt="" />
                 <div className="absolute z-30 bottom-[22px] ml-5 flex flex-col">
                   <span className="text-2xl text-light">{playlist?.title}</span>
