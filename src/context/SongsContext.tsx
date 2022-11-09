@@ -60,7 +60,7 @@ export default function SongsProvider({ children }: SongsProviderProps) {
     setIsPlaying(playState)
   }
 
-  function changeMyCollections(playlistId: string){
+  function updateMyCollections(playlistId: string){
     setMyCollections(prevState => [...prevState, playlistId])
   }
 
@@ -68,7 +68,7 @@ export default function SongsProvider({ children }: SongsProviderProps) {
   return (
     <>
       <SongsContext.Provider value={{
-        queue, playSong, playlists, newReleases, popular, songIndex, changeSongIndex, playSongs, isPlaying, changePlayState, changeMyCollections, myCollections }}>
+        queue, playSong, playlists, newReleases, popular, songIndex, changeSongIndex, playSongs, isPlaying, changePlayState, updateMyCollections, myCollections }}>
         {children}
       </SongsContext.Provider>
     </>
