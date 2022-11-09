@@ -1,18 +1,17 @@
 import { FaHeart, FaPause, FaPlay } from "react-icons/fa"
 import { useParams } from "react-router-dom"
-import HoleheartSVG from "../assets/icons/HoleheartSVG"
 import { useSongsContext } from "../context/SongsContext"
 import { totalDuration } from "../hooks/useHooks"
 import { PlaylistType } from "../types"
 import addtocol  from "../assets/icons/music-square-add.png"
-import { useEffect } from "react"
+import { useEffect, MouseEvent } from "react"
 import { BsHeart } from "react-icons/bs"
 
 export default function Playlist() {
   const { id } = useParams()
   const { playlists } = useSongsContext()
   const playlist = playlists.find(playlist => playlist.id === id) as PlaylistType 
-  const { playSongs, isPlaying, queue, changePlayState, myCollections, updateMyCollections } = useSongsContext()
+  const { playSongs, isPlaying, queue, changePlayState, myCollections, updateMyCollections, likes, updateLikes } = useSongsContext()
 
   useEffect(() => {
     // 👇️ set style on body element
@@ -57,6 +56,11 @@ export default function Playlist() {
       <span>Pause</span>
     </>
   )
+
+  function handleLike(e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, id: string){
+    e.stopPropagation()
+    updateLikes(id)
+  }
   
   return (
     <>
@@ -96,7 +100,9 @@ export default function Playlist() {
               <div onClick={() => playSongs(playlist.files, index)} key={song.id} className="flex justify-between items-center bg-white/10 rounded-lg p-2 hover:bg-white/20" title="Play">
                 <div className="flex gap-5 items-center">
                   <img src={song.cover} className="w-10 h-10 rounded-lg" alt="" />
-                  <button><HoleheartSVG /></button>
+                  <button onClick={(e) => handleLike(e, song.id)} className="text-secondary">
+                    {likes.includes(song.id) ? <FaHeart /> : <BsHeart />}
+                  </button>
                 </div>
                 <span>{song.title}</span>
                 <span className="mr-10">{song.duration}</span>

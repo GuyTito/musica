@@ -13,6 +13,7 @@ export default function SongsProvider({ children }: SongsProviderProps) {
   const [queue, setQueue] = useState([] as SongData[])
   const [playlists, setPlaylists] = useState<PlaylistType[]>([])
   const [myCollections, setMyCollections] = useState<string[]>(JSON.parse(localStorage.getItem('myCollections') as string) || [])
+  const [likes, setLikes] = useState<string[]>(JSON.parse(localStorage.getItem('likes') as string) || [])
   const [newReleases, setNewReleases] = useState<SongData[]>([])
   const [popular, setPopular] = useState<SongData[]>([])
   const [songIndex, setSongIndex] = useState(0);
@@ -66,15 +67,25 @@ export default function SongsProvider({ children }: SongsProviderProps) {
     } else setMyCollections(prevState => [...prevState, playlistId])
   }
 
+  function updateLikes(songId: string){
+    if (likes.includes(songId)){
+      setLikes(prevState => prevState.filter(id => id !== songId))
+    } else setLikes(prevState => [...prevState, songId])
+  }
+
   useEffect(()=>{
     localStorage.setItem("myCollections", JSON.stringify(myCollections))
   }, [myCollections])
+
+  useEffect(()=>{
+    localStorage.setItem("likes", JSON.stringify(likes))
+  }, [likes])
 
   
   return (
     <>
       <SongsContext.Provider value={{
-        queue, playSong, playlists, newReleases, popular, songIndex, changeSongIndex, playSongs, isPlaying, changePlayState, updateMyCollections, myCollections }}>
+        queue, playSong, playlists, newReleases, popular, songIndex, changeSongIndex, playSongs, isPlaying, changePlayState, updateMyCollections, myCollections, updateLikes, likes }}>
         {children}
       </SongsContext.Provider>
     </>

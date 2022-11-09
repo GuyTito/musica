@@ -34,6 +34,8 @@ export interface SongsContextType {
   isPlaying: boolean
   updateMyCollections: (playlistId: string) => void
   myCollections: string[]
+  updateLikes: (songId: string) => void
+  likes: string[]
 }
 
 export interface PlaylistType{
