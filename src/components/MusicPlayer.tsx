@@ -9,7 +9,6 @@ import { useSongsContext } from "../context/SongsContext";
 
 
 export default function MusicPlayer() {
-  const [songIndex, setSongIndex] = useState<number>(0);
   const [songSrc, setSongSrc] = useState<string>("");
   const [songTitle, setSongTitle] = useState<string>("");
   const [artist, setArtist] = useState<string>("");
@@ -24,7 +23,7 @@ export default function MusicPlayer() {
   const [randomIndex, setRandomIndex] = useState(0)
   const audio = useRef<HTMLMediaElement>(null);
   const progressBar = useRef<HTMLInputElement>(null);
-  const { queue, contextSongIndex, isPlaying, changePlayState } = useSongsContext()
+  const { queue, songIndex, isPlaying, changePlayState, changeSongIndex } = useSongsContext()
 
   function loadSong(songIndex: number){
     setSongSrc(queue[songIndex]?.audio)
@@ -35,10 +34,10 @@ export default function MusicPlayer() {
 
   useEffect(()=>{
     loadSong(songIndex);
+    playSong();
   }, [songIndex])
 
   useEffect(()=>{
-    setSongIndex(contextSongIndex)
     loadSong(songIndex)
     playSong();
   }, [queue])
@@ -67,8 +66,8 @@ export default function MusicPlayer() {
       loadSong(randomIndex)
       playSong()
     } else {
-      if (songIndex === (queue.length - 1)) setSongIndex(0)
-      else setSongIndex(songIndex + 1)
+      if (songIndex === (queue.length - 1)) changeSongIndex(0)
+      else changeSongIndex(songIndex + 1)
       playSong()
     }
   }
@@ -78,8 +77,8 @@ export default function MusicPlayer() {
       loadSong(randomIndex)
       playSong()
     } else {
-      if (songIndex === 0) setSongIndex(queue.length - 1)
-      else setSongIndex(songIndex - 1)
+      if (songIndex === 0) changeSongIndex(queue.length - 1)
+      else changeSongIndex(songIndex - 1)
       playSong()
     }
   }
