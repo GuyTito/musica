@@ -32,6 +32,8 @@ export interface SongsContextType {
   playSongs: (songs: SongData[], index?: number) => void
   changePlayState: (playState: boolean) => void
   isPlaying: boolean
+  changeMyCollections: (playlistId: string) => void
+  myCollections: string[]
 }
 
 export interface PlaylistType{
