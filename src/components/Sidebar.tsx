@@ -15,13 +15,17 @@ export default function Sidebar() {
     <>
       <nav className="mt-6 ml-6">
         <div><img src={logo} alt="logo" /></div>
-        <div className="mt-10 bg-dark-alt py-6 px-4 rounded-full space-y-7">
-          <NavLink to="/">
+        <div className="mt-10 bg-dark-alt py-6 px-4 rounded-full flex flex-col gap-7">
+          <NavLink to="/" title="Home">
             {({ isActive }) => (
               <HomeSVG className={isActive ? 'fill-secondary' : undefined} />
             )}
           </NavLink>
-          <PlaylistSVG />
+          <NavLink to="/collections" title="Collections">
+            {({ isActive }) => (
+              <PlaylistSVG className={isActive ? 'fill-secondary' : undefined} />
+            )}
+          </NavLink>
           <VideosSVG />
           <RadioSVG />
         </div>
