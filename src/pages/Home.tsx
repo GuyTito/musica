@@ -11,7 +11,7 @@ import { BsHeart } from "react-icons/bs";
 
 export default function Home() {
   const navigate = useNavigate()
-  const { playlists, newReleases, popular, updateMyCollections, myCollections } = useSongsContext()
+  const { playlists, newReleases, popular, updateLikes, likes } = useSongsContext()
 
   function displayArtists(files: SongData[]){
     const artists: Array<string> = []
@@ -56,8 +56,8 @@ export default function Home() {
                   </div>
                 </div>
                 <div>
-                  <button onClick={() => updateMyCollections(playlist.id)} className="p-[10px] rounded-full border border-light-o text-secondary">
-                    {myCollections.includes(playlist.id) ? <FaHeart /> : <BsHeart />}
+                  <button onClick={() => updateLikes(playlist.id)} className="p-[10px] rounded-full border border-light-o text-secondary">
+                    {likes.includes(playlist.id) ? <FaHeart /> : <BsHeart />}
                   </button>
                   
                 </div>

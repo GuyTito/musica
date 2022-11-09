@@ -90,8 +90,8 @@ export default function Playlist() {
                   </span>
                   <span></span>
                 </button>
-                <button onClick={() => updateMyCollections(playlist.id)} className="flex justify-center items-center rounded-full bg-white/10 hover:bg-white/20 p-2 text-secondary">
-                  {myCollections.includes(playlist.id) ? <FaHeart /> : <BsHeart />}
+                <button onClick={() => updateLikes(playlist.id)} className="flex justify-center items-center rounded-full bg-white/10 hover:bg-white/20 p-2 text-secondary">
+                  {likes.includes(playlist.id) ? <FaHeart /> : <BsHeart />}
                 </button>
               </div>
             </div>
