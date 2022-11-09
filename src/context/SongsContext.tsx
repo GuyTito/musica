@@ -12,7 +12,7 @@ export function useSongsContext() {
 export default function SongsProvider({ children }: SongsProviderProps) {
   const [queue, setQueue] = useState([] as SongData[])
   const [playlists, setPlaylists] = useState<PlaylistType[]>([])
-  const [myCollections, setMyCollections] = useState<string[]>([])
+  const [myCollections, setMyCollections] = useState<string[]>(JSON.parse(localStorage.getItem('myCollections') as string) || [])
   const [newReleases, setNewReleases] = useState<SongData[]>([])
   const [popular, setPopular] = useState<SongData[]>([])
   const [songIndex, setSongIndex] = useState(0);
@@ -63,6 +63,10 @@ export default function SongsProvider({ children }: SongsProviderProps) {
   function updateMyCollections(playlistId: string){
     setMyCollections(prevState => [...prevState, playlistId])
   }
+
+  useEffect(()=>{
+    localStorage.setItem("myCollections", JSON.stringify(myCollections))
+  }, [myCollections])
 
   
   return (
