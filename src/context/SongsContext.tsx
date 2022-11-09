@@ -43,8 +43,16 @@ export default function SongsProvider({ children }: SongsProviderProps) {
   }
 
   function playSongs(songs: SongData[], index: number = 0){
-    setQueue(songs)
-    setContextSongIndex(index)
+    if (queue === songs){
+      setQueue([])
+      setTimeout(function () {
+        setQueue(songs)
+      }, 150);
+      setContextSongIndex(index)
+    } else {
+      setQueue(songs)
+      setContextSongIndex(index)
+    }
   }
 
   function changePlayState(playState: boolean){
