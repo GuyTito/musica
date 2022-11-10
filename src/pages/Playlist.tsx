@@ -67,30 +67,30 @@ export default function Playlist() {
       {playlist ?  
         <div>
           {/* header */}
-          <div className="flex gap-10">
+          <div className="sm:flex gap-10">
             <img src={playlist?.cover} className="object-cover object-top w-[284px] h-[288px] rounded-[35px] " alt="" />
             <div className="grid">
               <div className="self-center mt-14 space-y-3">
                 <h1 className="text-primary font-bold text-4xl">{playlist?.title}</h1>
-                <p className="text-sm w-[527px]">{playlist?.info}</p>
+                <p className="text-sm sm:w-[527px]">{playlist?.info}</p>
                 <div className="text-sm">
                   <span>{playlist?.files.length} songs</span> ~ <span>{ totalDuration(playlist.files)} min</span>
                 </div>
               </div>
-              <div className="flex gap-5 items-center self-end mb-2">
-                <button onClick={() => handlePlaySongs()} className="flex items-center gap-2 py-1 px-3 rounded-full bg-white/10 active:bg-white/5 hover:bg-white/20">
+              <div className="flex gap-5 items-center self-end mb-2 mt-4 sm:mt-0">
+                <button onClick={() => handlePlaySongs()} className="flex items-center gap-2 py-2 px-4 rounded-full bg-white/10 active:bg-white/5 hover:bg-white/20">
                   {(queue !== (playlist && playlist?.files)) ? playButton
                     : !isPlaying ? playButton : pauseButton
                   }
                 </button>
-                <button onClick={() => updateMyCollections(playlist.id)} className="flex items-center gap-2 py-1 px-3 rounded-full bg-white/10 active:bg-white/5 hover:bg-white/20">
+                <button onClick={() => updateMyCollections(playlist.id)} className="flex items-center gap-2 py-2 px-4 rounded-full bg-white/10 active:bg-white/5 hover:bg-white/20">
                   <img src={addtocol} alt="" />
                   <span>
-                    {myCollections.includes(playlist.id) ? 'Remove from collection' : 'Add to collection'}
+                    {myCollections.includes(playlist.id) ? <span>Remove <span className="hidden sm:inline">from collection</span></span> : 'Add to collection'}
                   </span>
                   <span></span>
                 </button>
-                <button onClick={() => updateLikes(playlist.id)} className="flex justify-center items-center rounded-full bg-white/10 hover:bg-white/20 p-2 text-secondary">
+                <button onClick={() => updateLikes(playlist.id)} className="flex justify-center items-center rounded-full bg-white/10 hover:bg-white/20 p-3 text-secondary">
                   {likes.includes(playlist.id) ? <FaHeart /> : <BsHeart />}
                 </button>
               </div>
