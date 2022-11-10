@@ -15,10 +15,10 @@ export default function Layout() {
   
   return (
     <>
-      <div className="flex">
+      <div className="sm:flex ">
         <Sidebar />
 
-        <div className="ml-6 w-full mb-32 mr-[60px]">
+        <div className="mb-24 sm:mb-32 mx-6 sm:mx-0 sm:mr-[60px]">
           <Searchbar />
 
           <Outlet />

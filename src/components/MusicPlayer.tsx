@@ -148,7 +148,7 @@ export default function MusicPlayer() {
   
   return (
     <>
-      <div className="fixed backdrop-blur bg-dark-alt/50 border-t border-white/10 w-full  bottom-0 flex justify-between items-center pl-[100px] pr-[60px] py-4 text-white/40">
+      <div className="fixed backdrop-blur bg-dark-alt/50 border-t border-white/10 w-full  bottom-0 flex justify-between items-center sm:pl-[100px] sm:pr-[60px] py-4 text-white/40 px-6 sm:px-0">
         <audio ref={audio} src={songSrc} 
           onTimeUpdate={(e) => updateProgress(e)} 
           onError={()=>checkSrc()} 
@@ -166,11 +166,11 @@ export default function MusicPlayer() {
 
         <div className="flex flex-col gap-6 items-center">
           {/* music controls */}
-          <div className="flex gap-10">
+          <div className="flex gap-6 sm:gap-10">
             {/* shuffle button */}
             <TfiControlShuffle onClick={() => setShuffled(!shuffled)} 
               title={shuffled ? "Disable Shuffle" : 'Shuffle'} 
-              className={`w-6 h-6 ${shuffled && 'text-secondary'}`} 
+              className={`w-6 h-6 ${shuffled && 'text-secondary'} hidden sm:block`} 
             />
             {/* previous button */}
             <BsSkipStartFill onClick={() => prevSong()} title="Previous" className="w-6 h-6 hover:text-white" />
@@ -194,8 +194,8 @@ export default function MusicPlayer() {
           </div>
 
           {/* music progress */}
-          <div className="relative flex gap-2 items-center text-xs text-white">
-            <span className="absolute -left-9">
+          <div className="relative sm:flex gap-2 items-center text-xs text-white hidden">
+            <span className="absolute -left-9 hidden sm:block">
               {audio.current?.currentTime 
                 ? hh_mm_ss(audio.current!.currentTime) 
                 : '0:00'}
@@ -208,7 +208,7 @@ export default function MusicPlayer() {
                 min="0" max="100" step="1" className="fr__input" 
               />
             </div>
-            <span>
+            <span className="hidden sm:block">
               {audio.current?.duration 
                 ? hh_mm_ss(audio.current?.duration) 
                 : '00:00'}
@@ -217,7 +217,7 @@ export default function MusicPlayer() {
         </div>
 
         {/* volume */}
-        <div className="flex gap-2 items-center">
+        <div className="sm:flex gap-2 items-center hidden">
           {unmute 
             ? <FaVolumeUp onClick={()=>setUnmute(!unmute)} title="Mute" className="text-white" />
             : <FaVolumeOff onClick={() => setUnmute(!unmute)} title="Unmute" className="text-white" />

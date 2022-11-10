@@ -23,9 +23,9 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex gap-5">
+      <div className="flex gap-5 flex-col sm:flex-row">
         {/* hero  section */}
-        <div className="bg-[#609EAF] w-[60%] py-7  px-10 rounded-[40px] ">
+        <div className="bg-[#609EAF] sm:w-[60%] py-7  px-10 rounded-[40px] ">
           <span className="text-xs">Currated playlist</span>
           <div className="my-20 space-y-2">
             <h1 className="font-bold text-4xl">R & B Hits</h1>
@@ -42,13 +42,13 @@ export default function Home() {
         </div>
 
         {/* top charts */}
-        <div className=" w-[40%]">
+        <div className="mt-12 sm:mt-0 sm:w-[40%]">
           <h2 className="mb-[14px] text-2xl font-bold">Top Charts</h2>
-          <div className="space-y-3 h-[350px] overflow-y-scroll">
+          <div className="flex flex-row sm:flex-col gap-3 sm:h-[350px] overflow-x-scroll sm:overflow-y-scroll sm:overflow-x-hidden">
             {playlists.length > 0 && playlists.map((playlist: PlaylistType) => (
-              <div key={playlist.id} className="flex items-center justify-between p-4 rounded-[20px] bg-dark-alt">
-                <div onClick={() => navigate(`/playlist/${playlist.id}`)} className="flex items-center gap-4  cursor-pointer">
-                  <img src={playlist.cover} className="w-16 h-16 rounded-[10px]" alt="" />
+              <div key={playlist.id} className="flex sm:items-center justify-between p-4 rounded-[20px] bg-dark-alt w-[80%] sm:w-auto flex-shrink-0 ">
+                <div onClick={() => navigate(`/playlist/${playlist.id}`)} className="flex flex-col sm:flex-row sm:items-center gap-4  cursor-pointer">
+                  <img src={playlist.cover} className="w-24 h-24 sm:w-16 sm:h-16 rounded-[10px]" alt="" />
                   <div className="flex flex-col gap-1">
                     <h3 className="text-base">{playlist.title}</h3>
                     <span className="text-white/50 text-xs">{displayArtists(playlist.files)}...</span>

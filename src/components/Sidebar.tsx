@@ -13,7 +13,7 @@ export default function Sidebar() {
   
   return (
     <>
-      <nav className="mt-6 ml-6">
+      <nav className="mt-6 mx-6 hidden sm:block">
         <div><img src={logo} alt="logo" /></div>
         <div className="mt-10 bg-dark-alt py-6 px-4 rounded-full flex flex-col gap-7">
           <NavLink to="home" title="Home">
