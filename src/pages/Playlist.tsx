@@ -86,7 +86,10 @@ export default function Playlist() {
                 <button onClick={() => updateMyCollections(playlist.id)} className="flex items-center gap-2 py-2 px-4 rounded-full bg-white/10 active:bg-white/5 hover:bg-white/20">
                   <img src={addtocol} alt="" />
                   <span>
-                    {myCollections.includes(playlist.id) ? <span>Remove <span className="hidden sm:inline">from collection</span></span> : 'Add to collection'}
+                    {myCollections.includes(playlist.id) 
+                      ? <span>Remove <span className="hidden sm:inline">from collection</span></span> 
+                      : <span>Add <span className="hidden sm:inline">from collection</span></span>
+                    }
                   </span>
                   <span></span>
                 </button>
