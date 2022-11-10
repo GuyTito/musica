@@ -1,6 +1,9 @@
 export interface IconProps {
   className?: string
 }
+export interface SidebarProps {
+  setMenu?: React.Dispatch<React.SetStateAction<boolean>>
+}
 export interface SongsSliderProps {
   songs: SongData[]
   title: string

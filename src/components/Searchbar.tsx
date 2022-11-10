@@ -4,9 +4,11 @@ import { useSongsContext } from "../context/SongsContext";
 import { SongData } from "../types";
 import { RiMenu2Line  } from "react-icons/ri";
 import logo from "../assets/logo.png";
+import Sidebar from "./Sidebar";
 
 
 export default function Searchbar() {
+  const [menu, setMenu] = useState(false)
   const [modal, setModal] = useState(false)
   const [tracks, setTracks] = useState<SongData[]>([])
   const [searchTerm, setSearchTerm] = useState("")
@@ -40,7 +42,7 @@ export default function Searchbar() {
     <>
       {/* search bar */}
       <div className="flex sm:block items-center gap-4">
-        <RiMenu2Line className="text-2xl sm:hidden" />
+        <RiMenu2Line onClick={()=>setMenu(!menu)} className="text-2xl sm:hidden cursor-pointer" />
         <div className="sm:hidden"><img src={logo} alt="logo" /></div>
         <form onSubmit={(e)=>handleSubmit(e)} className="pl-7 flex items-center w-full sm:w-[60%] relative">
           <img src={search} alt='search' className="mr-5 hidden sm:block" />
@@ -51,6 +53,13 @@ export default function Searchbar() {
           <img src={search} alt='search' className="mr-5 sm:hidden" />
         </form>
       </div>
+
+      {/* moible menu */}
+      {menu && 
+        <div className="sm:hidden absolute sm:pl-32 bg-dark-alt/50 inset-0 top-[67px] overflow-hidden z-30">
+          <div className="sm:hidden"><Sidebar setMenu={setMenu} /></div>
+        </div>
+      }
 
       {/* search result modal */}
       {modal && 

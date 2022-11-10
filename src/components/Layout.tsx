@@ -16,7 +16,7 @@ export default function Layout() {
   return (
     <>
       <div className="sm:flex ">
-        <Sidebar />
+        <div className="hidden sm:block"><Sidebar /></div>
 
         <div className="mb-24 sm:mb-32 mx-6 sm:mx-0 sm:mr-[60px]">
           <Searchbar />
