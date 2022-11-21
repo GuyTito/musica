@@ -88,7 +88,7 @@ export default function Playlist() {
                   <span>
                     {myCollections.includes(playlist.id) 
                       ? <span>Remove <span className="hidden sm:inline">from collection</span></span> 
-                      : <span>Add <span className="hidden sm:inline">from collection</span></span>
+                      : <span>Add <span className="hidden sm:inline">to collection</span></span>
                     }
                   </span>
                   <span></span>
