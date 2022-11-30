@@ -30,12 +30,14 @@ export default function SongsProvider({ children }: SongsProviderProps) {
     }
   }
 
+  // https://musica-api.up.railway.app
+
   useEffect(() => {
-    fetchSongs('https://musica-api.up.railway.app/playlist')
+    fetchSongs('https://musica-api.onrender.com/playlist')
       .then(data => setPlaylists(data))
-    fetchSongs('https://musica-api.up.railway.app/new')
+    fetchSongs('https://musica-api.onrender.com/new')
       .then(data => setNewReleases(data))
-    fetchSongs('https://musica-api.up.railway.app/popular')
+    fetchSongs('https://musica-api.onrender.com/popular')
       .then(data => setPopular(data))
   }, [])
 
