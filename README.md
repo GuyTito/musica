@@ -2,16 +2,16 @@
 A responsive and functional music web app that can play, pause, repeat, skip, shuffle and search songs from an API.
 
 
-
 ### Screenshot
 
 <details>
 <summary>Screenshot</summary>
-
 ![Screenshot of project](./musica.PNG)
-
 </details>
 
+
+###Link
+-[Live Site](https://tito-musica.onrender.com/)
 
 
 ### Built with
