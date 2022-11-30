@@ -10,9 +10,9 @@ A responsive and functional music web app that can play, pause, repeat, skip, sh
 </details>
 
 
-###Link
+## Link
 
--[Live Site](https://tito-musica.onrender.com/)
+- [Live Site](https://tito-musica.onrender.com/)
 
 
 ### Built with
