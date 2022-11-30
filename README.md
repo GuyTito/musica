@@ -5,8 +5,11 @@ A responsive and functional music web app that can play, pause, repeat, skip, sh
 ### Screenshot
 
 <details>
+  
 <summary>Screenshot</summary>
+  
 ![Screenshot of project](./musica.PNG)
+  
 </details>
 
 
